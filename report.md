@@ -62,3 +62,13 @@ with a margin of error of 10%, a confidence level of 10% I should have a sample 
 5. Women of different ages, race, nationality, and physically or mentally challenged women, as well as women of several income brackets
 6. preferably the data needs to be up to date as possible, with COVID-19 happening and all.
 ---
+#2-Prepare
+####1. Data Collection
+ - The dataset used was not going to be a dataset collected by BellaBeat devices themselves, it was recommended to use FitBit proxy data. I have searched the internet for proxy BellaBeat data, but only FitBit or apple watch data was available, and the FitBit data had more users.
+ - It is a proxy dataset collected by Amazon Mechanical Turk online survey 2 days In December 2016.  
+ - The data was collected from 30 FitBit consenting users who gave their information about minute-level output for physical activity, heart rate, cadence, MET and sleep.
+ - This is 3rd party data. The users sent their data to Zenodo who sent to the Kaggle dataset owner Mobius, and the dataset was downloaded from Kaggle.  
+ - It is unclear why the data was collected in the first place, but it is assumed that it was general analysis of smart health device activity, or as practice for students or Kaggle competitions.  
+ - It is not possible to know whether all the people who replied are men or women, It is also impossible to know if any of them are lying or do not have a FitBit device at all, but that is unlikely.
+
+
