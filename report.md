@@ -95,3 +95,7 @@ with a margin of error of 10%, a confidence level of 10% I should have a sample 
 - The dataset has one huge limitation though: It is from 2016! we’re in 2021 now. this is a huge problem, because in 2021 we have problems such as COVID-19 where people’s activity has highly changed. 
 - The dataset is also not cited, There is also no clue about the creator of the dataset.
 
+####5. Data Ethics, Bias and Privacy
+- All the users gave their consent to the data. there is no personal information whatsoever, so the data does even need anonymization.
+- If the users of this dataset could be contacted, they should be contacted to inform them of our decision to use their data for our company's marketing purposes, and our procedures.  
+- All of data is supposedly self reported so this decreases the possibility of some forms of bias. however, as stated above, there is no way to know age, gender, demographics or whatever.
