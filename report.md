@@ -71,4 +71,6 @@ with a margin of error of 10%, a confidence level of 10% I should have a sample 
  - It is unclear why the data was collected in the first place, but it is assumed that it was general analysis of smart health device activity, or as practice for students or Kaggle competitions.  
  - It is not possible to know whether all the people who replied are men or women, It is also impossible to know if any of them are lying or do not have a FitBit device at all, but that is unlikely.
 
-
+####2.Meta-Data
+ - The dataset has no metadata at all whatsoever. some of the fields were researched on the FitBit device API website, and by reading medical articles and definitions.
+ - 4 unimportant columns, or ones that could not be reserarched were removed from the dataset.
