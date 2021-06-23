@@ -99,3 +99,5 @@ with a margin of error of 10%, a confidence level of 10% I should have a sample 
 - All the users gave their consent to the data. there is no personal information whatsoever, so the data does even need anonymization.
 - If the users of this dataset could be contacted, they should be contacted to inform them of our decision to use their data for our company's marketing purposes, and our procedures.  
 - All of data is supposedly self reported so this decreases the possibility of some forms of bias. however, as stated above, there is no way to know age, gender, demographics or whatever.
+---
+
