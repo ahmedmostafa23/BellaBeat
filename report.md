@@ -101,3 +101,11 @@ with a margin of error of 10%, a confidence level of 10% I should have a sample 
 - All of data is supposedly self reported so this decreases the possibility of some forms of bias. however, as stated above, there is no way to know age, gender, demographics or whatever.
 ---
 
+#3-Process
+
+The data has been backed up to GitHub in the latest commit before I start the process stage and start cleaning the dataset.
+
+###1.Data Integrity: 
+ - accuracy: there seems to be a problem with some of the fields. e.g. MET should be 1 if there is no exercise being done, but they all have 10
+ - consistency: The dataset has been made consistent by keeping the same fields with the same names everywhere in the database with the same type, format and precision
+ - completeness: the dataset is complete. nothing was lost during download or conversion from .csv files to the postgreSQL FitBitData Database.
