@@ -370,13 +370,18 @@ WITH Minute AS (
 
  - Q6: Are those users’ health metrics within the healthy range?
   --> The only indicator of health is the HRV in the SecondHRV table. It was found that the baseline night and day time for people. They’re all within 58-95, and that day time < night time. so the people are fairly healthy! especially that the 95th percentile is at 113 and 1st percentile at 48. are still within the healthy range of 40~200.
-   ![img.png](graphs/question3.png)
    
+![Day vs night average HRV for users](graphs/question3.png)  
+   
+| Metric | min | max | avg | 1st | 5th | 10th | 25th | 50th | 75th | 90th | 95th | 99th |
+| :-----: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Value | 36 | 203 | 77 | 48 | 54 | 57 | 63 | 73 | 88 | 102 | 113 | 148 |  
+
 
  - Q7: do weekends affect the performance and sleep?   
     - it can be seen that the highest very active weekday is Tuesday->Wed->Thu->Sat->Fri->Sun. so Sunday, a weekend, is the lowest day of the week. 
     - For moderate activity, Friday is the least, while Tuesday is the highest  
-    - For sleep, here, I’ll only consider users with >2 records. the average sleep on days is highest on Saturday and Sunday, but lowest on Monday and Thursday.
+    - For sleep, only consider users with >2 records. the average sleep on days is highest on Saturday and Sunday, but lowest on Monday and Thursday.
     - for light activity, Sunday is the least and Monday are the least, Tuesday is the most
     - for activity in general, Sunday is the least, and Tuesday is the most.
     We can conlude that on weekends, especially Sunday, users tend to relax and do the least activity, and sleep the most.  
