@@ -314,13 +314,13 @@ WITH Minute AS (
 )
 --Other queries will then follow this temporarily CTE to query it.
 ```
-<br>
-1. Sleep
 
-  - From the exploratory results, It can be seen that the MinuteSleep table seems to only have records when the person is actually sleeping and when wearing the device. 10 device_id were missing from the MinuteSleep table. which indicates that a portion of the users 10/33, do not wear the device when sleeping.  
-   recommendation: in the future, investigate why users do not sleep with the device, or add some features that encourage sleeping with it.
-  - There is no relation between sleep_value and met or calories or intensity or steps. However, it is strange that some people have a sleep value of 1 (asleep) and they have a very high MET or calorie count. people asleep walking < 20 steps per minute, This indicates the device incorrectly measures activity, or in an extreme scenario: people are sleep walking! Thus, There is no way to predict whether a person is asleep or not using the other metrics. the sleep table can only be used to predict what time users wake up and go to sleep. This is a limitation of the dataset, because the not all users have worn the device while sleeping. 
-   recommendation: in the future, add a feature to the app or device e.g. similar to Netflix's "are you still watching?", or prompt them for their usual sleep schedules and concentrate on that time.
+1. Sleep
+   - From the exploratory results, It can be seen that the MinuteSleep table seems to only have records when the person is actually sleeping and when wearing the device. 10 device_id were missing from the MinuteSleep table. which indicates that a portion of the users 10/33, do not wear the device when sleeping.  
+   recommendation: in the future, investigate why users do not sleep with the device, or add some features that encourage sleeping with it.  
+   - There is no relation between sleep_value and met or calories or intensity or steps. However, it is strange that some people have a sleep value of 1 (asleep) and they have a very high MET or calorie count. people asleep walking < 20 steps per minute, This indicates the device incorrectly measures activity, or in an extreme scenario: people are sleep walking! Thus, There is no way to predict whether a person is asleep or not using the other metrics. the sleep table can only be used to predict what time users wake up and go to sleep. This is a limitation of the dataset, because the not all users have worn the device while sleeping. 
+   recommendation: in the future, add a feature to the app or device e.g. similar to Netflix's "are you still watching?", or prompt them for their usual sleep schedules and concentrate on that time.  
+     
 
 2. Investigating correlations between MET, intensity, steps and calories
     - calories/min depend on the level of activity, weight, height, age, pregnancy and etc. and thus varies greatly from person to the other, so calories as a number is not good metric for this investigation. however, we maybe able to find the baseline calorie for each user (at MET=1, but MET IS the ratio ratio, so MET will be used instead)  
@@ -337,16 +337,22 @@ WITH Minute AS (
     - moderate ones: 453 records have speed of > 1.86. with the 99th percentile at 4.2 km/h. Thus active will be defined as anything > 4.2 km/h
     - The interesting finding here is that different users and minutes can have the same level of activity but vary greatly in speed. which means that either the device is wrong, or that not all users have running or walking as their activity. Unfortunately, there is no other way to know what their activities are.  
     recommendation: In the future, the company can ask the users on the device or app to enter what the activity they are doing is, or what is their job or the nature of their job. if the users do not respond to these, a point system could be set up to entice them to input their information.
-
-
+      
+      
 4. Answering the Questions!
  - Q1: What do they do the most/least with their product?  
-   --> The average intensity level will be averaged for each user, for each day of the study. it has been found that the average user spends 81% of his day being sedentary, 16% doing light activity, 1% doing moderate activity and 2% doing very intense activity. of that sedentary, sleeping is included.
-
+   --> The average intensity level will be averaged for each user, for each day of the study. it has been found that the average user spends 81% of his device wearing time being sedentary, 16% doing light activity, 1% doing moderate activity and 2% doing very intense activity. of that sedentary, sleeping is included.
+   
+   | very | moderate | light | inactive |
+   | :----: | :--------: | :-----: | :--------: |
+   | 1.7% | 1.2% | 15.8% | 81.3% |
+    ![Pie chart of those percentages](graphs/question1.png)
+   
 
  - Q2: How long do they wear it everyday?  
    --> For the 31 days of the dataset, less than 25% of days were worn below 1000 minutes (70% of the day), while the median is at 1440 which is the whole day  
    --> only 4/33 users wore the device for less than 68% of the month. with the least worn times being at night
+   ![Count of wearing the device at different times of day](graphs/question2.png)
 
 
  - Q3: What is the thing they enjoy most/least about their product?  
@@ -354,7 +360,7 @@ WITH Minute AS (
 
 
  - Q4: What is the most frequent time of day for usage?  
-   --> Most people wear their device most of the day, but in general, people who do take off their devices, take them off from 10:00am to 4:00pm, but they seem to put the device back on at 12:00, which is extremely strange and needs further investigating.
+   --> Most people wear their device most of the day, but in general, people who do take off their devices, take them off from 10:00am to 4:00pm, but they seem to put the device back on at 12:00, which is extremely strange and needs further investigating. 
 
 
  - Q5: How much running did they do this week? how long are their intervals?  
@@ -364,6 +370,7 @@ WITH Minute AS (
 
  - Q6: Are those users’ health metrics within the healthy range?
   --> The only indicator of health is the HRV in the SecondHRV table. It was found that the baseline night and day time for people. They’re all within 58-95, and that day time < night time. so the people are fairly healthy! especially that the 95th percentile is at 113 and 1st percentile at 48. are still within the healthy range of 40~200.
+   ![img.png](graphs/question3.png)
    
 
  - Q7: do weekends affect the performance and sleep?   
