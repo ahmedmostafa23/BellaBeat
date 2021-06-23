@@ -243,4 +243,75 @@ The data has been backed up to GitHub in the latest commit before I start the pr
       - calories vs steps or intensity or met
   3. Answering the questions using data
 
+1. Exploratory Analysis
+- Numerical columns could be summarized with min/max/sum/NOT NULL count/percentiles and outliers. 
+- while categorical (ordinal or nominal) are summarized as count, NOT NULL count, unique count, and the frequency of each category.  
+- while date/time columns will get min/max and count NOT NULL.
+  
+SQL Syntax for summarizing a numerical column "col_name" in a table "table_name":
+```{postgresql}
+SELECT
+    MIN(col_name),
+    MAX(col_name),
+    SUM(col_name),
+    AVG(col_name),
+    COUNT(*)
+    PERCENTILE_DISC(0.01) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.05) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.1) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.25) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.75) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.9) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.95) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.99) WITHIN GROUP (ORDER BY col_name)
+FROM table_name
+WHERE
+    col_name IS NOT NULL
+```
+SQL Syntax for summarizing a date/time column:
+```{postgresql}
+SELECT
+    MIN(col_name),
+    MAX(col_name)
+    COUNT(*)
+FROM table_name
+WHERE
+    col_name IS NOT NULL
+```
+SQL Syntax for summarizing a categorical column:
+```{postgresql}
+SELECT
+    col_name,
+    COUNT(*)
+FROM table_name
+GROUP BY
+    col_name
+```
+- Strategy: join the minutes tables all into a "minute table". Since they all have 33 unique devices and almost the same number of rows, they will be INNER JOINed to get a full record (except the sleep table, it has a lot less records, so will be LEFT JOINed)  
 
+| **column name** | **data type** | __sub type__ |
+| :-----------: | :---------: | :--------: |
+| device_id | categorical | nominal |
+| date | date | N/A |
+| time | time | N/A |
+| datetime | timestamp | N/A |
+| cadence | numerical | discrete |
+| sleep | categorical | ordinal |
+| calories | numerical | continuous |
+| met | numerical | discrete |
+| intensity | categorical | ordinal |
+
+For the Minute Table, it will joined using the following syntax:
+```{postgresql}
+WITH Minute AS (
+    SELECT *
+    FROM MinuteCalories USING(device_id, date, time)
+    INNER JOIN MinuteMET USING(device_id, date, time)
+    INNER JOIN MinuteSteps USING(device_id, date, time)
+    INNER JOIN USING(device_id, date, time)
+    LEFT JOIN MinuteSleep USING(device_id, date, time)
+)
+--Other queries will then follow this temporarily CTE to query it.
+```
+- Calori
