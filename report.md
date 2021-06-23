@@ -145,4 +145,37 @@ The data has been backed up to GitHub in the latest commit before I start the pr
     - All the fields are numeric and typed perfectly. so no need to remove white space or get the value of columns.
     - No records have been deleted from the table.
   
+  - DailySleep Table
+    - There are no NULL values
+    - There are 3 duplicate values. they have been removed
+    - A constraint for the sleep_value column has been set to either be 1, 2 or 3.
+    - device_id check to be exactly 10 characters long
+    - minutes_in_bed check to be >=0 and <= 1440 (because you can’t spend negative minutes, or greater than a whole day in a single day)
+    - minutes_asleep check to also be >=0 and <= minutes_in_bed.
+    - Since all of the days start at 00:00:00, I’m just going to create a date column without the time, and discard the day_start column.
   
+  - MinuteSteps Table
+    - device_id check 10 characters long.
+    - Table has no duplicate rows.
+    - Table has not a single NULL cell.
+    - minute_start will be split to 2 columns, date and time. both are set to NOT NULL.
+    - minute_start column has been deleted.
+    - Constraint to the steps column so that it can never be negative.
+  
+  - SecondHRV Table
+    - Table does not have a single NULL cell.
+    - LENGTH(device_id) = 10 constraint
+    - HRV check >= 0
+    - second_start will be split into date and time columns. both set to NOT NULL.
+  
+  - DailyActivity Table
+    - Constraint LENGTH(device_id) = 10;
+    - day_start column has been replaced with "date"
+    - Table has no duplicates and not a single NULL cell.
+    - 331/940 records do NOT add up active distances to total distance:
+      - Corrected columns where the manual sum of active distances - total_sum >= -0.05km, so that the total_sum will be the sum of them.
+      - Created a logged_distance column such that for columns where the manual sum of the active distances - total_sum < -0.05km, the difference goes into the logged_distance column.
+    - Now, constrain the table such that
+      - active_distance + logged_distance = total_distance
+      - the sum of all active minutes SHOULD be = 1440. because a single day has 1440 minutes and sedentary minutes sitting down or sleeping. so if a person does not add up to 1440 minutes a day, it means he has taken his FitBit device off for a part of the day. create a new column that has the time where the user took off his fitbit.
+    -Now, constrain the table such that active_minutes + not wearing = 1440
