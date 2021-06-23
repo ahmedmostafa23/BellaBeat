@@ -178,4 +178,36 @@ The data has been backed up to GitHub in the latest commit before I start the pr
     - Now, constrain the table such that
       - active_distance + logged_distance = total_distance
       - the sum of all active minutes SHOULD be = 1440. because a single day has 1440 minutes and sedentary minutes sitting down or sleeping. so if a person does not add up to 1440 minutes a day, it means he has taken his FitBit device off for a part of the day. create a new column that has the time where the user took off his fitbit.
-    -Now, constrain the table such that active_minutes + not wearing = 1440
+    - Now, constrain the table such that active_minutes + not wearing = 1440
+  
+  - MinuteIntensity
+    - Table does not have a single NULL cell.
+    - No duplicate rows
+    - The minute_start column will be divided into date and time, and they will be set to NOT NULL.
+    - device_id constraint length = 10
+    - intensity must have a set membership of either 0,1,2,3
+
+  - MinuteMET
+    - Table does not have a single NULL value.
+    - Table has no duplicate records.
+    - constraint to device_id is length = 10
+    - minute_start will be divided to date and time columns.
+    - met will be constrained to always be >= 1
+    - There seems to be a problem here. some met values are 0. which violate the constraint. 7 rows that violate the constraint have been deleted. 
+    - The numbers here do not make sense. the value of MET should be 1 if the person is sedentary while lying down or completely idle. and 16 if the user is an Olympic athlete who can see the finish line. most people in the table have 10, and some people have 100+!! The only logical case is that the numbers in the table are multiplied by 10. because most people have 10, when they should have 1. So all MET values were divided by 10.
+    - Some values after division would be <1, and would violate the constraint. Only a single record violated that constraint, it has been deleted.
+
+  - MinuteSleep
+    - table has no NULL values
+    - There are 543 duplicate records!
+    - minute_start will be divided into date and time cols with NOT NULL
+    - device_id length constrained to 10
+    - sleep_value constrained to {1,2,3,}
+
+  - MinuteCalories
+    - Table has no NULL values, and no whole duplicate records.
+    - constrained device_id length = 10
+    - Split minute_start into date and time. both constrained to NOT NULL.
+    - constrain calories to always be > 0
+
+
