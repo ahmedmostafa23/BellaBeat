@@ -4,7 +4,7 @@ Bellabeat is a manufactuer of smart health products for women. It is a global co
 BellaBeat manufactures several products. The products are ordinary looking jewelry, you won't realize they're (too) smart!
 - BellaBeat Leaf: smart bracelet, necklace or clip.
 - BellaBeat Time: watch, but aso classic looking
-- BellaBeat Spring: smart water bottle  
+- BellaBeat Spring: smart water bottle
 
 Owners of BellaBeat devices enjoy the BellaBeat app: an app that receives data about vitals from smart devices about activity, sleep, stress, menstruation and the users' habits.  
 BellaBeat membership subscription: 24/7 access to personalized guidance on the above problems, beauty and goals.
@@ -15,6 +15,9 @@ BellaBeat membership subscription: 24/7 access to personalized guidance on the a
 - they use google display network around key marketing dates
 The CEO requires us to analyze the usage data of a device to gain insight on how users are already using said smart devices.
 then she wants high-level recommendations on how said insight can inform the marketing strategy
+
+To learn more about BellaBeat, you can visit their [website.](https://bellabeat.com)  
+
 ---
 ##The Scope of Work
 ####My Role
@@ -118,6 +121,7 @@ The data has been backed up to GitHub in the latest commit before I start the pr
     4. Some columns maybe combined into a single column, other columns maybe processed or divided into several other columns
     5. String types will be checked for excessive whitespace, and removed if any.
 
+
 - SQL syntax for removing whole duplicate records from any table "table_name"
   ```{postgresql}
   WITH everything AS (
@@ -135,6 +139,8 @@ The data has been backed up to GitHub in the latest commit before I start the pr
   WHERE
     NOT (table_name IS NOT NULL);
   ```
+  
+
   - Weight table:  
     - There are no duplicate records
     - There are no null values
@@ -145,6 +151,7 @@ The data has been backed up to GitHub in the latest commit before I start the pr
     - All the fields are numeric and typed perfectly. so no need to remove white space or get the value of columns.
     - No records have been deleted from the table.
   
+
   - DailySleep Table
     - There are no NULL values
     - There are 3 duplicate values. they have been removed
@@ -154,6 +161,7 @@ The data has been backed up to GitHub in the latest commit before I start the pr
     - minutes_asleep check to also be >=0 and <= minutes_in_bed.
     - Since all of the days start at 00:00:00, I’m just going to create a date column without the time, and discard the day_start column.
   
+
   - MinuteSteps Table
     - device_id check 10 characters long.
     - Table has no duplicate rows.
@@ -162,12 +170,14 @@ The data has been backed up to GitHub in the latest commit before I start the pr
     - minute_start column has been deleted.
     - Constraint to the steps column so that it can never be negative.
   
+
   - SecondHRV Table
     - Table does not have a single NULL cell.
     - LENGTH(device_id) = 10 constraint
     - HRV check >= 0
     - second_start will be split into date and time columns. both set to NOT NULL.
   
+
   - DailyActivity Table
     - Constraint LENGTH(device_id) = 10;
     - day_start column has been replaced with "date"
@@ -180,12 +190,14 @@ The data has been backed up to GitHub in the latest commit before I start the pr
       - the sum of all active minutes SHOULD be = 1440. because a single day has 1440 minutes and sedentary minutes sitting down or sleeping. so if a person does not add up to 1440 minutes a day, it means he has taken his FitBit device off for a part of the day. create a new column that has the time where the user took off his fitbit.
     - Now, constrain the table such that active_minutes + not wearing = 1440
   
+
   - MinuteIntensity
     - Table does not have a single NULL cell.
     - No duplicate rows
     - The minute_start column will be divided into date and time, and they will be set to NOT NULL.
     - device_id constraint length = 10
     - intensity must have a set membership of either 0,1,2,3
+
 
   - MinuteMET
     - Table does not have a single NULL value.
@@ -197,12 +209,14 @@ The data has been backed up to GitHub in the latest commit before I start the pr
     - The numbers here do not make sense. the value of MET should be 1 if the person is sedentary while lying down or completely idle. and 16 if the user is an Olympic athlete who can see the finish line. most people in the table have 10, and some people have 100+!! The only logical case is that the numbers in the table are multiplied by 10. because most people have 10, when they should have 1. So all MET values were divided by 10.
     - Some values after division would be <1, and would violate the constraint. Only a single record violated that constraint, it has been deleted.
 
+
   - MinuteSleep
     - table has no NULL values
     - There are 543 duplicate records!
     - minute_start will be divided into date and time cols with NOT NULL
     - device_id length constrained to 10
     - sleep_value constrained to {1,2,3,}
+
 
   - MinuteCalories
     - Table has no NULL values, and no whole duplicate records.
@@ -212,3 +226,21 @@ The data has been backed up to GitHub in the latest commit before I start the pr
 
 ###3. Backup
 - Before proceeding with the Analysis phase, the database has been backed up
+
+---
+
+#4-Analyze
+
+- In this phase, 3 types of analysis will be done:
+  1. Exploratory analysis:
+      - Which categories/users/date/time have very low count compared to others, what am I going to do with them?
+      - Summary of each column (aggregate: min, max, sum, count, unique count, percentiles and outliers)
+      - Which categories/users have very low count compared to others, what am I going to do with them?
+      - Investigate any anomalies/outliers found. 
+      - do I need to divide the dataset into subsets? e.g. active vs. inactive? anomalies and outliers?
+  2. Checking for correlations	
+      - sleep vs calories or met or intensity
+      - calories vs steps or intensity or met
+  3. Answering the questions using data
+
+
