@@ -74,3 +74,24 @@ with a margin of error of 10%, a confidence level of 10% I should have a sample 
 ####2.Meta-Data
  - The dataset has no metadata at all whatsoever. some of the fields were researched on the FitBit device API website, and by reading medical articles and definitions.
  - 4 unimportant columns, or ones that could not be reserarched were removed from the dataset.
+
+####3. Software used
+- The dataset is large. some files have 3.5 million records!
+- It has been decided to use a database to store the data and do the analysis there. a database called FitBitData was created in PostgreSQL on my device.
+- Further metadata has been added to the dataset, with the proper data types, precision, format, constraints and etc.
+- Tables in postgreSQL database were created with the coressponding names, datatypes, constraints and etc.
+
+####4. Checking if dataset can still answer original questions.
+- By looking at the dataset I can see that there are 2 giant joined tables:
+  1. by minute (sleep, calorie, MET, steps, and intensity)
+  2. by day (steps, distance, active minutes and calories)
+  3. There are also the HRV and Weight tables.
+
+- There are some interesting correlations worth investigating. i.e. the relation between calories, MET and intensity.
+- I also want to find the avg pace in steps/km for different levels of activity or speed of a person. I also want to see the relation between MET, steps vs sleep_value
+
+- Overall, the dataset has enough attributes to answer some of the questions. It is missing a few such as detailed activity, demographics, gender, job, menstruation cycle info. I can try to infer the nature of their job: is it sedentary? or active?
+- However, There is no way to tell if the data is accurate or incomplete. it did not mention how many records. But it did say 30 subjects, and they were 33 unique device_id values. 
+- The dataset has one huge limitation though: It is from 2016! we’re in 2021 now. this is a huge problem, because in 2021 we have problems such as COVID-19 where people’s activity has highly changed. 
+- The dataset is also not cited, There is also no clue about the creator of the dataset.
+
