@@ -315,29 +315,85 @@ WITH Minute AS (
 --Other queries will then follow this temporarily CTE to query it.
 ```
 <br>
-1. Sleep  
-    - From the exploratory results, It can be seen that the MinuteSleep table seems to only have records when the person is actually sleeping and when wearing the device. 10 device_id were missing from the MinuteSleep table. which indicates that a portion of the users 10/33, do not wear the device when sleeping.  
-   recommendation: in the future, investigate why users do not sleep with the device, or add some features that encourage sleeping with it.  
+1. Sleep
 
-    - There is no relation between sleep_value and met or calories or intensity or steps. However, it is strange that some people have a sleep value of 1 (asleep) and they have a very high MET or calorie count. people asleep walking < 20 steps per minute, This indicates the device incorrectly measures activity, or in an extreme scenario: people are sleep walking! Thus, There is no way to predict whether a person is asleep or not using the other metrics. the sleep table can only be used to predict what time users wake up and go to sleep. This is a limitation of the dataset, because the not all users have worn the device while sleeping.
-
+  - From the exploratory results, It can be seen that the MinuteSleep table seems to only have records when the person is actually sleeping and when wearing the device. 10 device_id were missing from the MinuteSleep table. which indicates that a portion of the users 10/33, do not wear the device when sleeping.  
+   recommendation: in the future, investigate why users do not sleep with the device, or add some features that encourage sleeping with it.
+  - There is no relation between sleep_value and met or calories or intensity or steps. However, it is strange that some people have a sleep value of 1 (asleep) and they have a very high MET or calorie count. people asleep walking < 20 steps per minute, This indicates the device incorrectly measures activity, or in an extreme scenario: people are sleep walking! Thus, There is no way to predict whether a person is asleep or not using the other metrics. the sleep table can only be used to predict what time users wake up and go to sleep. This is a limitation of the dataset, because the not all users have worn the device while sleeping. 
+   recommendation: in the future, add a feature to the app or device e.g. similar to Netflix's "are you still watching?", or prompt them for their usual sleep schedules and concentrate on that time.
 
 2. Investigating correlations between MET, intensity, steps and calories
     - calories/min depend on the level of activity, weight, height, age, pregnancy and etc. and thus varies greatly from person to the other, so calories as a number is not good metric for this investigation. however, we maybe able to find the baseline calorie for each user (at MET=1, but MET IS the ratio ratio, so MET will be used instead)  
     - One thing should be for sure: at MET =1, steps should be =0, intensity =0 and calories = baseline. records where that is not satisfied (below <500 rows) have been removed from the analysis. 
     - The relation between met and percentage baseline is linear, but unit stepped with a few “intersections”. i.e. each MET range covers a range of percentage baseline calories. which seems to tell that MET is by definition, the baseline calories ratio. and that MET is approximated to be whole numbers by the device.  
     - The relation between cadence and baseline calories seems to be linear but is clustered heavily around the trendline. indicating that the percentage baseline of calories depends on factors other than just walking, but perhaps from user to user or other kinds of activity. i.e. the device users don't just walk or run.  
-    - For intensity, there seems to be something quite strange. people having baseline calories of 10+ have an intensity of just 1! what should happen is that MET >3 should be at Intensity > 1! this maybe an indication that the device is measuring incorrectly.
+    - For intensity, there seems to be something quite strange. people having baseline calories of 10+ have an intensity of just 1! what should happen is that MET >3 should be at Intensity > 1! this maybe an indication that the device is measuring incorrectly.  
+    
 
-3. Time to study the activity of people in a day for simplicity.
-I will start with very active ones who have very_active_minutes > 0 and very_active_distance > 0
+3. DailyActivity  
 
-light ones:
--855 records are not zero. no time but no distance.
--in fact, 99th percentile is 1.86 km/h. thus I will let moderate be anything > 1.86km/h
+    - Only records with active minutes > 0 and active distance > 0 will be studied. a new column called average speed will be created which is distance/time in km/h
+    - light ones: 855 records are not zero. no time but no distance. in fact, 99th percentile is 1.86 km/h. thus I will let moderate be anything > 1.86km/h  
+    - moderate ones: 453 records have speed of > 1.86. with the 99th percentile at 4.2 km/h. Thus active will be defined as anything > 4.2 km/h
+    - The interesting finding here is that different users and minutes can have the same level of activity but vary greatly in speed. which means that either the device is wrong, or that not all users have running or walking as their activity. Unfortunately, there is no other way to know what their activities are.  
+    recommendation: In the future, the company can ask the users on the device or app to enter what the activity they are doing is, or what is their job or the nature of their job. if the users do not respond to these, a point system could be set up to entice them to input their information.
 
-moderate ones
--453 records have speed of > 1.86. with the 99th percentile at 4.2
--thus I will let active be anything >=4.2km/h
 
-- Answer
+4. Answering the Questions!
+ - Q1: What do they do the most/least with their product?  
+   --> The average intensity level will be averaged for each user, for each day of the study. it has been found that the average user spends 81% of his day being sedentary, 16% doing light activity, 1% doing moderate activity and 2% doing very intense activity. of that sedentary, sleeping is included.
+
+
+ - Q2: How long do they wear it everyday?  
+   --> For the 31 days of the dataset, less than 25% of days were worn below 1000 minutes (70% of the day), while the median is at 1440 which is the whole day  
+   --> only 4/33 users wore the device for less than 68% of the month. with the least worn times being at night
+
+
+ - Q3: What is the thing they enjoy most/least about their product?  
+   --> 9/33 users do not wear their device while sleeping (and 6 more could be excluded for wearing for less than 5 days). so we can conclude that users dislike most to sleep with the device. other than that, there is not enough data.
+
+
+ - Q4: What is the most frequent time of day for usage?  
+   --> Most people wear their device most of the day, but in general, people who do take off their devices, take them off from 10:00am to 4:00pm, but they seem to put the device back on at 12:00, which is extremely strange and needs further investigating.
+
+
+ - Q5: How much running did they do this week? how long are their intervals?  
+  --> It is difficult to say whether the users ran or not. because very active for example should have users faster than 4.2km/h, but there are slower users. so are they running, or are they doing something else  
+   -->It can be attempted to guess how many users are running based on their speed and intensity. at a certain pace, as discussed in the above correlations.
+
+
+ - Q6: Are those users’ health metrics within the healthy range?
+  --> The only indicator of health is the HRV in the SecondHRV table. It was found that the baseline night and day time for people. They’re all within 58-95, and that day time < night time. so the people are fairly healthy! especially that the 95th percentile is at 113 and 1st percentile at 48. are still within the healthy range of 40~200.
+   
+
+ - Q7: do weekends affect the performance and sleep?   
+    - it can be seen that the highest very active weekday is Tuesday->Wed->Thu->Sat->Fri->Sun. so Sunday, a weekend, is the lowest day of the week. 
+    - For moderate activity, Friday is the least, while Tuesday is the highest  
+    - For sleep, here, I’ll only consider users with >2 records. the average sleep on days is highest on Saturday and Sunday, but lowest on Monday and Thursday.
+    - for light activity, Sunday is the least and Monday are the least, Tuesday is the most
+    - for activity in general, Sunday is the least, and Tuesday is the most.
+    We can conlude that on weekends, especially Sunday, users tend to relax and do the least activity, and sleep the most.  
+      --> Recommendation: have the device push them to their goals on those days, or provide a fun alternative that they can enjoy while resting. provide them with a weekly summary so they can feel good about themselves. The company can also add features to the device that sends a message on a weekend e.g. "it's the weekend! enjoy getting uninterrupted sleep" or something similar.
+      
+
+ - Q8: is their job sedentary or active?
+    - To answer this, look at the avg MET for each user from 9:00 am to 5:00 pm for each day, vs outside that time (except from 10:00pm to 7:00am, where they are supposedly sleeping)
+    - some users have work met > none work, and others have the opposite, others have the same. not enough evidence sadly.
+
+
+ - Q9: do they wear the device while sleeping?
+    - 10/33 users did not wear it.
+    - the ones who did wear it, I expected ~12500 records for 6.8h of sleep every night. only 10/24 have >10000 records for the whole month.
+
+
+  - Q10: do they still wear it on the weekends?  
+    - the least worn day was Monday, followed by Sunday, Saturday and Friday (all 120-126). the rest of the days are 147-152
+    - the least day with minutes worn is Sunday and Saturday followed closely by Monday and Friday
+    - the day with the lowest average minutes worn is Thursday then Sunday then Saturday, and the most is Monday.  
+    --> so less people wear the device on Monday and closely followed by the weekend. and when people actually put on the device on the weekends, they use it for the least time  
+      recommendation: we need to add features or messages to encourage them to use on the weekend, i.e. to help them relax.
+
+
+ - Q11 :when do they wake up and go to sleep?
+   - they start waking up at 6:00 am and go to sleep at 9:30pm.  
+    perhaps in the future the company can add a feature to know exactly where each user woke up. e.g. by allowing the user to set an alarm on the device, and record when the user turns off his device.
