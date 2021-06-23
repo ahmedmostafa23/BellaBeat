@@ -1,0 +1,34 @@
+device_id: this is a computer generated number. each FitBit user has his/her own unique number.
+-type: string
+-format: string, as is.
+-precision: none, string.
+-constraints: not null, length = 10
+-unity/currency: none
+-math formula: none
+-unique count: 33
+
+minute_start: This is the timestamp of the beginning of the minute.
+-type: timestamp
+-format: yyyy-mm-dd hh:mm:ss (24 hours)
+-precision: seconds are just seconds. no ms or anything.
+-constraints: not null
+-units/currency: none
+-formula: none
+-min: 2016-04-12 00:00:00
+-max: 2016-05-12 15:59:00
+
+steps: this is the number of steps walked/ran by the user in a minute
+-a minute of walking has an average of 100 Steps. Vigorous walking requires about 130 steps per minute, jogging > 140
+-type: integer
+-format & precision: whole number
+-constraints: none
+-units: steps lol
+-min: 0 
+-max: 220
+
+table has 1325580 rows
+table has no duplicates
+Not a single NULL cell
+
+shcema information:
+-each device_id will have several entries in the table with different dates and times.

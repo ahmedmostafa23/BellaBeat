@@ -1,0 +1,108 @@
+device_id: this is a computer generated number. each FitBit user has his/her own unique number.
+-type: string
+-format: string, as is.
+-precision: none, string.
+-constraints: not null, length = 10
+-unity/currency: none
+-math formula: none
+-unique count: 33
+
+day_start: the start datetime of the day of the summary record.
+-type: date/time/datetime
+-format: yyyy-mm-dd hh:mm:ss (24 hours)
+-precision: seconds are just seconds. no ms or anything.
+-constraints: not null
+-units/currency: none
+-formula: none
+-min: 2016-04-12
+-max: 2016-05-12
+
+total_steps: this is the number of steps walked/ran by the user in the day
+-type: integer
+-format & precision: whole number
+-constraints: none
+-units: steps lol
+-min: 0
+-max: 36019
+
+total_distance: total distance walked/ran by the user in one day. 
+-->this is also the sum of very_active_distance + moderately_active_distance+ light_active_distance. which are self-explanatory.
+-->a guideline: for light walking, 1km = 1250~1550 walking steps
+-type: decimal
+-format & precision: 2 decimal places
+-constraints: none
+-units: km
+-min: 0
+-max: 28.04km
+
+very_active_distance
+min:0
+max: 21.92
+
+moderately_active_distance
+min: 0 
+max: 6.48
+
+lightly_active_distance
+min: 0
+max: 10.71
+
+sedentary_active_distance
+min: 0
+max: 0.11
+
+logged_distance
+min: 0
+max: 9.37
+
+very_active_minutes
+min: 0
+max: 210
+
+moderately_active_minutes:
+min: 0 
+max: 143
+
+lightly_active_minutes
+min: 0
+max: 518
+
+sedentary_active_minutes
+min: 0
+max: 1440
+
+not_wearing_device_minutes
+min: 0 
+max: 1438
+
+very, moderately, lightly and sedentary_active_distance are the same as above but a general guideline:
+-->very: manual agricultural work or competitive athletic training, taking yourself to the absolute limits in terms of strength, not endurance
+-->moderately: Moving frequently through the day (construction work, stocking shelves, cleaning, etc.) and/or moderate exercise
+-->lightly: eating or gentle walking or light exercises e.g. moving arms or yoga 
+-->sedentary: being awake not moving at all. sitting down, lying on couch, working on a laptop or paper or whatever.
+constraint: they all need to add up to total distance.
+
+xxxx_active_minutes: these are the number of minutes in a day spent at a certain activity level. all of the active minutes column should add up to 1440. if the user wore the FitBit for 24h
+-->very, moderately, lightly and sedentary
+-->there are 1440 minutes in a day.
+-type: interval (minutes)
+-format and precision: integer, whole number
+-constraints: sum of all active minutes column <= 1440
+-units: minutes
+
+calories: this is the amount of calories burnt in this day.
+-->a healthy human male burns around, while a female
+-type: int
+-precision: whole number, no decimal places.
+-format: no decimal places.
+-constraints: none
+-units: Kcal
+-min: 0
+-max: 4900
+
+number of records: 940
+number of unique records: 940, no duplicates!
+not a single null cell
+
+schema info:
+each subject(device_id) can have more than one record. each record must have a different dayy.

@@ -1,0 +1,59 @@
+device_id: this is a computer generated number. each FitBit user has his/her own unique number.
+-type: text
+-format: text
+-precision: text
+-constraints: not null, length =10
+-unity/currency: none
+-math formula: none
+-unique count: 8
+
+date_of_weigh: this is the date when the owner weighed him/herself
+-type: datetime
+-format: yyyy-mm-dd hh:mm:ss (24 hours)
+-precision: seconds are just seconds. no ms or anything.
+-constraints: not null, well I mean we could add a constraint so that only dates AFTER FitBit invention would be included lol but I'll pass.
+-units/currency: none
+-formula: none
+-min: 2016-04-12 06:47:00
+-max: 2016-05-12 23:59:00
+
+weight_kg: this is the user’s body mass in kg when he weighed him/herself at the specified date. the world average human weight is 62kg
+-weight on its own is a bad metric to judge how close a person is to ideal or healthy. it needs to be combined with body fat percentage and BMI to put height and fat into consideration. 
+-type: decimal
+-format: decimal to 1 decimal place
+-precision: 2 decimal places
+-constraints: >= 0
+-units: kilogram (kg)
+-formula: none
+-min: 52.6kg
+-max: 133.5kg
+-null count: 0
+
+bfr: (body fat ratio) this is the user’s ratio of fat mass/ total mass at the time of weighing.
+-->the healthy range for men is <=17, while for women is 14 <= <= 24
+-type: decimal
+-format: percentage to 1 decimal place
+-precision: 4 decimal places
+-constraints: < 1
+-units: none (kg/kg)
+-min: 22%
+-max: 25%
+-null count: 0
+
+bmi: body mass index, a value derived from the mass and height of a person, this value serves as an easy way to judge if a person’s body is overweight, underweight, or healthy. (not to be used by pregnant women or body builders)
+BMI of 25 is normal. anything over is overweight, anything under is underweight.
+-type: decimal
+-format: 1 decimal places
+-precision: 1 decimal place
+-constraints: none
+-units: kg/m^2
+-equation: mass in kg/ (height in m) ^2
+-min: 21.5
+-max: 47.5
+-null count: 0
+
+Total record count: 67
+table does not have a single null value in any cell.
+
+Table schema information:
+-The table has 8 unique device owners who weight themselves once, or several times in the month from 12-4-2016 to 12-5-2016. so each device_id should appear multiple times each with a different weight (or the same) value with different dates and/or times.

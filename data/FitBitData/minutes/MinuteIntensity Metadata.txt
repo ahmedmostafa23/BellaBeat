@@ -1,0 +1,32 @@
+device_id: this is a computer generated number. each FitBit user has his/her own unique number.
+-type: string
+-format: string, as is.
+-precision: none, string.
+-constraints: not null, length = 10
+-unity/currency: none
+-math formula: none
+-unique count :33
+
+minute_start: This is the timestamp of the beginning of the minute.
+-type: timestamp
+-format: yyyy-mm-dd hh:mm:ss (24 hours)
+-precision: seconds are just seconds. no ms or anything.
+-constraints: not null
+-units/currency: none
+-formula: none
+-min: 2016-04-12 00:00:00
+-max: 2016-05-12 15:59:00
+
+intensity: this is the activity intensity rating from 0-3 in the given interval. these coresspond to sedentary(0), lightly(1), moderately(2) and very(3)
+-type: integer
+-format & precision: whole number
+-constraints : set membership: {0, 1, 2, 3}
+-units: none
+- 0: 84%, 1: 14%, 2: 1%, 3: 1%
+
+total row count: 1325580
+no null cells
+no duplicate rows
+
+multiple records can have the same device id, but different date/time.
+

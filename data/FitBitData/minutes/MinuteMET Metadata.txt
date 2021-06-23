@@ -1,0 +1,34 @@
+device_id: this is a computer generated number. each FitBit user has his/her own unique number.
+-type: string
+-format: string, as is.
+-precision: none, string.
+-constraints: not null, length = 10
+-unity/currency: none
+-math formula: none
+-unique count: 33
+
+minute_start: This is the timestamp of the beginning of the minute.
+-type: timestamp
+-format: yyyy-mm-dd hh:mm:ss (24 hours)
+-precision: seconds are just seconds. no ms or anything.
+-constraints: not null
+-units/currency: none
+-formula: none
+-min: 12-4-2016
+-max: 12-5-2016
+
+met: metabolic equivalent of tasks measured based on oxygen consumption. METs = 2 means you’re now burning twice as much calories as you would just sitting down quietly doing nothing. while the MET not doing anything is = 1
+-type: integer
+-format & precision: whole number
+-constraints: range: >= 1, < 16 (16 is pretty much professional athlete at the last minute of the race type of intensity)
+-slow walking is 2, avg walking is 3, brisk is 4, slow jogging is 6, jogging is 8, running is 10~16
+-units: energy/energy (none)
+-formula: calories burnt in interval of task/ calories burnt in same interval of task while sitting quietly not doing anything (not even talking or reading or watching)
+-min: 10!!!
+-max: 138!!!	
+
+table has: 1325580 records
+not a single NULL cell
+no duplicates.
+
+the table can have several records with the same device_id, but it needs to have different date/time.

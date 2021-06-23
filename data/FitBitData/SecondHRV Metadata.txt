@@ -1,0 +1,50 @@
+device_id: this is a computer generated number. each FitBit user has his/her own unique number.
+-type: text
+-format: text
+-precision: none
+-constraints: not null, length is 10
+-unity/currency: none
+-math formula: none
+-unique value count: 14
+
+second_start: This is the datetime at which the second started.
+-format: yyyy-mm-dd hh:mm:ss (24 hours)
+-precision: seconds are just seconds. no ms or anything.
+-constraints: not null
+-units/currency: none
+-formula: none
+-min: 12-4-2016
+-max: 12-5-2016
+
+hrv: Heart Rate Variability
+Reference link : https://ouraring.com/blog/what-is-heart-rate-variability/
+Unlike heart rate in bmp (beats per minute) which kind of aggregates the beats in said minute. 120bpm does not mean that the heart beats 2 times per second (that’s the average), but the time between the beats could be 0.9s, 1.1, 1.15, 0.95 and etc.
+High HRV is associated with rest-and-digest, general fitness (moderate activity), and good recovery
+Low HRV is associated with fight-or-flight, stress (dehydration, alcohol, late meals, general stress, hot bedroom), illness, or overtraining, but also high intensity exercise
+A normal HRV for adults can range anywhere from below 20 to over 200 milliseconds, to properly find what is "normal" you need to measure the individual's baseline. there is a baseline for night time, and one for day time. night time is more important because it purely captures my body. not my thoughts, food, exercise, anxiety and etc.
+-->the trends I should be looking for here are "is the HRV getting higher or lower with each day?", "is it okay in general?"
+-type: integer:
+-format: whole number
+-precision: no decimal places
+-constraints: >= 0 
+-units: milliseconds (ms)
+-equation: Root mean square of successive differences between normal heartbeats (RMSSD). 
+-min: 36
+-max: 203
+-null count: 0
+
+RMS (root mean square) i.e. you take the root of the mean of the squares of the values. steps:
+0-measure the time between each 2 successive heartbeats
+1-calculate the difference between the time between the successive heartbeats in ms
+2-square said differences
+3-sum the differences
+4-divide by n-1 or n
+5-square root of everything
+
+Total record count: 2483658
+does not have a single null count
+does not have full duplicates.
+
+schema info:
+each subject (device_id) can have several records in the columns at different date/time with different HRV.
+

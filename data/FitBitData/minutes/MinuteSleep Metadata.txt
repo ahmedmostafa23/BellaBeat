@@ -1,0 +1,33 @@
+device_id: this is a computer generated number. each FitBit user has his/her own unique number.
+-type: string
+-format: string, as is.
+-precision: none, string.
+-constraints: not null, length = 10
+-unity/currency: none
+-math formula: none
+-unique count: 24
+
+minute_start: This is the timestamp of the beginning of the minute.
+-type: timestamp
+-format: yyyy-mm-dd hh:mm:ss (24 hours)
+-precision: seconds are just seconds. no ms or anything.
+-constraints: not null
+-units/currency: none
+-formula: none
+-min: 2016-04-11 20:48:00
+-max: 2016-05-12 09:56:00
+
+sleep_value: this is a number from 1-3 that represents the “depth” of sleep at the given interval
+-type: integer
+-format & precision: whole number
+-units: none
+-constraints : set membership: {1, 2, 3}
+- 1: 91%, 2: 7%, 3:1%
+
+total number of records: 188521
+no null values.
+there are 543 duplicates records!
+
+multiple device_id records allowed for different dates.
+
+

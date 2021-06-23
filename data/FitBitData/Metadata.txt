@@ -10,72 +10,84 @@ Context: No idea why the data was collected. The data shows the health/activity 
 
 Attribute information
 
-id: this is a computer generated number. each FitBit user has his/her own unique number.
--type: Integer
--format: 10 digit integer
--constraints: Unique, not null
--length/regex constraints : 10 digits
+device_id: this is a computer generated number. each FitBit user has his/her own unique number.
+-type: string
+-format: string, as is.
+-precision: none, string.
+-constraints: not null, length = 10
+-unity/currency: none
+-math formula: none
 
-datetime (interval_start): This is the date/time/datetime at which an activity started, something was summarized/measured, or was done.
--type: date/time/datetime
--format: not yet specified
--precision/range: seconds are just seconds. no ms or anything. they are all values in 2016.
+ (interval_start): This is the date/time/datetime at which an activity started, something was summarized/measured, or was done.
+-type: timestamp
+-format: yyyy-mm-dd hh:mm:ss (24 hours)
+-precision: seconds are just seconds. no ms or anything.
+-constraints: not null
+-units/currency: none
+-formula: none
 
 weight: this is the user’s body mass in kg when he weighed him/herself at the specified date.
 -type: decimal
 -format: decimal to 1 decimal place
+-precision: 2 decimal places
 -constraints: none
 -units: kilogram (kg)
 
 bfp: (body fat percentage) this is the user’s ratio of fat mass/ total mass at the time of weighing.
--type: percentage
--format: percentage really
--constraints :none
+-type: decimal
+-format: percentage to 1 decimal place
+-precision: 4 decimal places
+-constraints: < 1
 -units: none (kg/kg)
 
 BMI: body mass index, a value derived from the mass and height of a person, this value serves as an easy way to judge if a person’s body is overweight, underweight, or healthy. (not to be used by pregnant women or body builders)
 BMI of 25 is normal. anything over is overweight, anything under is underweight.
 -type: decimal
--format: 2 decimal places
+-format: 1 decimal places
+-precision: 1 decimal place
 -constraints: none
 -units: kg/m^2
 -equation: mass in kg/ (height in m) ^2
 
-Deleted ManualReport??
-LogId??
-
-HRV : Heart rate variability: This is the variation in time between heartbeats. heart rate data is used to calculate HRV several times per second.
+HRV: Unlike heart rate in bmp (beats per minute) which kind of aggregates the beats in said minute. 120bpm does not mean that the heart beats 2 times per second (that’s the average), but the time between the beats could be 0.9s, 1.1, 1.15, 0.95 and etc.
 -type: integer:
--format: no decimals
--constraints: n/a
--units: none
--equation: RMSSD
+-format: whole number
+-precision: no decimal places
+-constraints: none
+-units: milliseconds (ms)
+-equation: Root mean square of successive differences between normal heartbeats (RMSSD). 
+RMS (root mean square) i.e. you take the root of the mean of the squares of the values. steps:
+0-measure the time between each 2 successive heartbeats
+1-calculate the difference between the time between the successive heartbeats in ms
+2-square said differences
+3-sum the differences
+4-divide by n-1 or n
+5-square root of everything
 
 calories: this is the amount of calories burnt in the time interval, starting with the given time. e.g. if table is minute calories, then this is the amount of calories burnt in one minute, starting from the start time.
 -type: decimal
--format & precision: 4 decimal places
+-precision: 4 decimal places
+-format: 4 decimal places
 -constraints: none
 -units: Kcal
 
 intensity: this is the activity intensity rating from 0-3 in the given interval
 -type: integer
 -format & precision: whole number
--constraints: none
+-constraints : set membership: {0, 1, 2, 3}
 -units: none
--set membership: {0, 1, 2, 3}
 
 sleep_value: this is a number from 1-3 that represents the “depth” of sleep at the given interval
 -type: integer
 -format & precision: whole number
 -constraints: none
 -units: none
--set membership: {1, 2, 3}
+-constraints : set membership: {1, 2, 3}
 
 METs: metabolic equivalent of tasks measured based on oxygen consumption. METs = 2 means you’re now burning twice as much calories as you would just sitting down quietly doing nothing. while the MET not doing anything is = 1
 -type: integer
 -format & precision: whole number
--constraints: none
--range: >= 1, < 16 (16 is pretty much professional athlete at the last minute of the race type of intensity)
+-constraints: range: >= 1, < 16 (16 is pretty much professional athlete at the last minute of the race type of intensity)
 -units: energy/energy (none)
 -formula: calories burnt in interval of task/ calories burnt in same interval of task while sitting quietly not doing anything.
 
@@ -85,19 +97,16 @@ steps: this is the number of steps walked/ran by the user in the given interval
 -constraints: none
 -units: steps lol
 
-deleted
-logged_activity_distance and tracker_distance
-
 total distance: total distance walked/ran by the user in one day. this is also the sum of very_active_distance + moderately_active_distance+ light_active_distance. which are self-explanatory.
-for light walking, 1km = 1250~1550 walking steps
+a guideline: for light walking, 1km = 1250~1550 walking steps
 -type: decimal
--format & precision: not yet
+-format & precision: 2 decimal places
 -constraints: none
 -units: km
 
 xxxx_active_minutes: these are the number of minutes in a day spent at a certain activity level. all of the active minutes column should add up to 1440. if the user wore the FitBit for 24h
 there are 1440 minutes in a day.
--type: interval (minutes)
+-type: int (minutes)
 -format and precision: integer, whole number
 -constraints: sum of all active minutes column <= 1440
 -units: minutes
