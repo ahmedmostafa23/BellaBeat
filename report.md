@@ -109,3 +109,40 @@ The data has been backed up to GitHub in the latest commit before I start the pr
  - accuracy: there seems to be a problem with some of the fields. e.g. MET should be 1 if there is no exercise being done, but they all have 10
  - consistency: The dataset has been made consistent by keeping the same fields with the same names everywhere in the database with the same type, format and precision
  - completeness: the dataset is complete. nothing was lost during download or conversion from .csv files to the postgreSQL FitBitData Database.
+
+###2. Cleaning:
+ - The tables will now be explored. the following will be done to each table:
+    1. Constraints will be added to the tables and columns (enumeration, set membership, cross column, range, not NULL etc.)
+    2. The tables will be checked for duplicate rows. if any are found they will be removed
+    3. The tables will be checked for NULL values. if any are found they will be dealt with accordingly.
+    4. Some columns maybe combined into a single column, other columns maybe processed or divided into several other columns
+    5. String types will be checked for excessive whitespace, and removed if any.
+
+- SQL syntax for removing whole duplicate records from any table "table_name"
+  ```{postgresql}
+  WITH everything AS (
+    DELETE FROM table_name
+    RETURNING *
+  )
+  INSERT INTO table_name
+  SELECT DISTINCT *
+  FROM everything;
+  ```
+- SQL syntax for checking for any cells in any table "table_name" that have NULL values
+  ```{postgresql}
+  SELECT *
+  FROM table_name
+  WHERE
+    NOT (table_name IS NOT NULL);
+  ```
+  - Weight table:  
+    - There are no duplicate records
+    - There are no null values
+    - Constraints have been added to weight_kg, bfr, bmi and height_m to be >= 0, and bfr <= 1
+    - Device_id to check that it is exactly 10 characters long.
+    - Split the date_of_weigh column into 2 columns: date and time
+    - Added NOT NULL to date and time columns
+    - All the fields are numeric and typed perfectly. so no need to remove white space or get the value of columns.
+    - No records have been deleted from the table.
+  
+  
