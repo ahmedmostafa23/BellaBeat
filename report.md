@@ -314,4 +314,30 @@ WITH Minute AS (
 )
 --Other queries will then follow this temporarily CTE to query it.
 ```
-- Calori
+<br>
+1. Sleep  
+    - From the exploratory results, It can be seen that the MinuteSleep table seems to only have records when the person is actually sleeping and when wearing the device. 10 device_id were missing from the MinuteSleep table. which indicates that a portion of the users 10/33, do not wear the device when sleeping.  
+   recommendation: in the future, investigate why users do not sleep with the device, or add some features that encourage sleeping with it.  
+
+    - There is no relation between sleep_value and met or calories or intensity or steps. However, it is strange that some people have a sleep value of 1 (asleep) and they have a very high MET or calorie count. people asleep walking < 20 steps per minute, This indicates the device incorrectly measures activity, or in an extreme scenario: people are sleep walking! Thus, There is no way to predict whether a person is asleep or not using the other metrics. the sleep table can only be used to predict what time users wake up and go to sleep. This is a limitation of the dataset, because the not all users have worn the device while sleeping.
+
+
+2. Investigating correlations between MET, intensity, steps and calories
+    - calories/min depend on the level of activity, weight, height, age, pregnancy and etc. and thus varies greatly from person to the other, so calories as a number is not good metric for this investigation. however, we maybe able to find the baseline calorie for each user (at MET=1, but MET IS the ratio ratio, so MET will be used instead)  
+    - One thing should be for sure: at MET =1, steps should be =0, intensity =0 and calories = baseline. records where that is not satisfied (below <500 rows) have been removed from the analysis. 
+    - The relation between met and percentage baseline is linear, but unit stepped with a few “intersections”. i.e. each MET range covers a range of percentage baseline calories. which seems to tell that MET is by definition, the baseline calories ratio. and that MET is approximated to be whole numbers by the device.  
+    - The relation between cadence and baseline calories seems to be linear but is clustered heavily around the trendline. indicating that the percentage baseline of calories depends on factors other than just walking, but perhaps from user to user or other kinds of activity. i.e. the device users don't just walk or run.  
+    - For intensity, there seems to be something quite strange. people having baseline calories of 10+ have an intensity of just 1! what should happen is that MET >3 should be at Intensity > 1! this maybe an indication that the device is measuring incorrectly.
+
+3. Time to study the activity of people in a day for simplicity.
+I will start with very active ones who have very_active_minutes > 0 and very_active_distance > 0
+
+light ones:
+-855 records are not zero. no time but no distance.
+-in fact, 99th percentile is 1.86 km/h. thus I will let moderate be anything > 1.86km/h
+
+moderate ones
+-453 records have speed of > 1.86. with the 99th percentile at 4.2
+-thus I will let active be anything >=4.2km/h
+
+- Answer
