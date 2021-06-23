@@ -210,4 +210,5 @@ The data has been backed up to GitHub in the latest commit before I start the pr
     - Split minute_start into date and time. both constrained to NOT NULL.
     - constrain calories to always be > 0
 
-
+###3. Backup
+- Before proceeding with the Analysis phase, the database has been backed up
