@@ -120,26 +120,7 @@ The data has been backed up to GitHub in the latest commit before I start the pr
     3. The tables will be checked for NULL values. if any are found they will be dealt with accordingly.
     4. Some columns maybe combined into a single column, other columns maybe processed or divided into several other columns
     5. String types will be checked for excessive whitespace, and removed if any.
-
-
-- SQL syntax for removing whole duplicate records from any table "table_name"
-  ```{postgresql}
-  WITH everything AS (
-    DELETE FROM table_name
-    RETURNING *
-  )
-  INSERT INTO table_name
-  SELECT DISTINCT *
-  FROM everything;
-  ```
-- SQL syntax for checking for any cells in any table "table_name" that have NULL values
-  ```{postgresql}
-  SELECT *
-  FROM table_name
-  WHERE
-    NOT (table_name IS NOT NULL);
-  ```
-  
+    
 
   - Weight table:  
     - There are no duplicate records
@@ -247,47 +228,8 @@ The data has been backed up to GitHub in the latest commit before I start the pr
 - Numerical columns could be summarized with min/max/sum/NOT NULL count/percentiles and outliers. 
 - while categorical (ordinal or nominal) are summarized as count, NOT NULL count, unique count, and the frequency of each category.  
 - while date/time columns will get min/max and count NOT NULL.
-  
-SQL Syntax for summarizing a numerical column "col_name" in a table "table_name":
-```{postgresql}
-SELECT
-    MIN(col_name),
-    MAX(col_name),
-    SUM(col_name),
-    AVG(col_name),
-    COUNT(*)
-    PERCENTILE_DISC(0.01) WITHIN GROUP (ORDER BY col_name),
-    PERCENTILE_DISC(0.05) WITHIN GROUP (ORDER BY col_name),
-    PERCENTILE_DISC(0.1) WITHIN GROUP (ORDER BY col_name),
-    PERCENTILE_DISC(0.25) WITHIN GROUP (ORDER BY col_name),
-    PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY col_name),
-    PERCENTILE_DISC(0.75) WITHIN GROUP (ORDER BY col_name),
-    PERCENTILE_DISC(0.9) WITHIN GROUP (ORDER BY col_name),
-    PERCENTILE_DISC(0.95) WITHIN GROUP (ORDER BY col_name),
-    PERCENTILE_DISC(0.99) WITHIN GROUP (ORDER BY col_name)
-FROM table_name
-WHERE
-    col_name IS NOT NULL
-```
-SQL Syntax for summarizing a date/time column:
-```{postgresql}
-SELECT
-    MIN(col_name),
-    MAX(col_name)
-    COUNT(*)
-FROM table_name
-WHERE
-    col_name IS NOT NULL
-```
-SQL Syntax for summarizing a categorical column:
-```{postgresql}
-SELECT
-    col_name,
-    COUNT(*)
-FROM table_name
-GROUP BY
-    col_name
-```
+
+
 - Strategy: join the minutes tables all into a "minute table". Since they all have 33 unique devices and almost the same number of rows, they will be INNER JOINed to get a full record (except the sleep table, it has a lot less records, so will be LEFT JOINed)  
 
 | **column name** | **data type** | __sub type__ |
@@ -448,5 +390,227 @@ WITH Minute AS (
 
 
 8. Have HRV be the main focus of the device/app, and make that the main marketting feature. because HRV is truly the only metric that the device can use to predict whether a user is acutally healthy.
+---
+
+#Appendix
+
+###Here you will find all of the PostgreSQL queries that were written to answer the questions or retrieve particular data
+
+- SQL syntax for removing whole duplicate records from any table "table_name"
+  ```{postgresql}
+  WITH everything AS (
+    DELETE FROM table_name
+    RETURNING *
+  )
+  INSERT INTO table_name
+  SELECT DISTINCT *
+  FROM everything;
+  ```
+- SQL syntax for checking for any cells in any table "table_name" that have NULL values
+  ```{postgresql}
+  SELECT *
+  FROM table_name
+  WHERE
+    NOT (table_name IS NOT NULL);
+  ```
+- SQL Syntax for summarizing a numerical column "col_name" in a table "table_name":
+    ```{postgresql}
+    SELECT
+        MIN(col_name),
+        MAX(col_name),
+        SUM(col_name),
+        AVG(col_name),
+        COUNT(*)
+        PERCENTILE_DISC(0.01) WITHIN GROUP (ORDER BY col_name),
+        PERCENTILE_DISC(0.05) WITHIN GROUP (ORDER BY col_name),
+        PERCENTILE_DISC(0.1) WITHIN GROUP (ORDER BY col_name),
+        PERCENTILE_DISC(0.25) WITHIN GROUP (ORDER BY col_name),
+        PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY col_name),
+        PERCENTILE_DISC(0.75) WITHIN GROUP (ORDER BY col_name),
+        PERCENTILE_DISC(0.9) WITHIN GROUP (ORDER BY col_name),
+        PERCENTILE_DISC(0.95) WITHIN GROUP (ORDER BY col_name),
+        PERCENTILE_DISC(0.99) WITHIN GROUP (ORDER BY col_name)
+    FROM table_name
+    WHERE
+        col_name IS NOT NULL
+    ```
+- SQL Syntax for summarizing a date/time column:
+    ```{postgresql}
+    SELECT
+        MIN(col_name),
+        MAX(col_name)
+        COUNT(*)
+    FROM table_name
+    WHERE
+        col_name IS NOT NULL
+    ```
+- SQL Syntax for summarizing a categorical column:
+   ```{postgresql}
+   SELECT
+        col_name,
+        COUNT(*)
+   FROM table_name
+   GROUP BY
+        col_name
+   ```
+- Question 1:
+    ```{postgresql}
+    /*Question 1*/
+    SELECT 
+        CAST(AVG(very_active_minutes) AS INT) AS "very",
+        CAST(AVG(moderately_active_minutes) AS INT) AS "moderate",
+        CAST(AVG(lightly_active_minutes) AS INT) AS "light", 
+        CAST(AVG(sedentary_active_minutes) AS INT) AS "inactive"
+    FROM DailyActivity;
+    ```
+- Question 2 and 4, count of number of records per user:
+    ```{postgresql}
+    WITH Minute AS (
+        SELECT *
+        FROM MinuteCalories
+        INNER JOIN MinuteMET
+        INNER JOIN MinuteIntensity
+        INNER JOIN MinuteSteps
+        LEFT JOIN MinuteSleep
+    )
+    SELECT
+        device_id,
+        COUNT(*)
+    FROM Minute
+    GROUP BY
+        device_id
+    ```
+- Question 2 and 4, count of number of records by day
+    ```{postgresql}
+    WITH Minute AS (
+        SELECT *
+        FROM MinuteCalories
+        INNER JOIN MinuteMET
+        INNER JOIN MinuteIntensity
+        INNER JOIN MinuteSteps
+        LEFT JOIN MinuteSleep
+    )
+    SELECT
+        date,
+        COUNT(*)
+    FROM Minute
+    GROUP BY
+        date
+    ORDER BY
+        date ASC;
+    ```
+- Question 5:
+    ```{postgresql}
+    /*This is a file that fetches records for users with both active minutes > 0, and active
+    distance > 0 for all days of the study, and calculates their speed. it should be filtered so
+    that it only produces runners. for moderately active speed is (1.86-4.2)km/h, for very
+    active it is > 4.2km/h*/
+    SELECT
+        lightly_active_distance,
+        lightly_active_minutes,
+        CAST((lightly_active_distance*60/lightly_active_minutes) AS NUMERIC(3,1)) AS "lightly_active_speed"
+    FROM DailyActivity
+    WHERE
+        lightly_active_distance > 0
+        AND lightly_active_minutes > 0
+    ORDER BY
+        1 ASC;
+    ```
+- Question 6:
+    ```{postgresql}
+        WITH day_avg AS (
+        SELECT
+            device_id,
+            CAST(AVG(HRV) AS INT) AS "day_avg_hrv"
+        FROM SecondHRV
+        WHERE
+            time BETWEEN '07:00:00' AND '22:00:00'
+        GROUP BY
+            device_id
+    ),
+    night_avg AS (
+        SELECT
+            device_id,
+            CAST(AVG(HRV) AS INT) AS "night_avg_hrv"
+        FROM SecondHRV
+        WHERE
+            time > '22:00:00' OR time < '07:00:00' 
+        GROUP BY
+            device_id
+    )
+    SELECT
+        d.device_id,
+        day_avg_hrv,
+        night_avg_hrv
+    FROM day_avg AS "d"
+    FULL OUTER JOIN night_avg AS "n" USING(device_id)
+    ```
+- Questions 7&10 (the weekend), Helping function:
+    ```{postgresql}
+    *The function EXTRACT(DOW FROM date) returns the days of the week as a double precision numerical type
+    such that Sunday = 0, and Saturday = 6. I have created the following function to take that number, and return the name
+    of the day of the week for me, so that my life becomes easier.*/
+    CREATE OR REPLACE FUNCTION fn_downumber2name(dow double precision) RETURNS TEXT AS
+    $$
+        SELECT
+        (
+            CASE
+            WHEN dow = 0 THEN 'Sun'
+            WHEN dow = 1 THEN 'Mon'
+            WHEN dow = 2 THEN 'Tue'
+            WHEN dow = 3 THEN 'Wed'
+            WHEN dow = 4 THEN 'Thu'
+            WHEN dow = 5 THEN 'Fri'
+            ELSE 'Sat'
+            END
+        )
+    $$ LANGUAGE SQL
+    ```
+- Questions 7&10:
+    ```{postgresql}
+    /*This SQL code will group by days of the week using the above function.*/
+    SELECT
+        fn_downumber2Name(EXTRACT(dOW FROM date)) AS "day_of_week",
+        COUNT(*)
+    FROM DailyACtivity
+    GROUP BY
+        fn_downumber2name(EXTRACT(dOW FROM date))
+    ```
+- Question 8:
+    ```{postgresql}
+    /*This file will compare the MET at work hours against the avg MET outside work hours (9:00 am to 5:00pm)*/
+    WITH Minute AS (
+        SELECT *
+        FROM MinuteCalories
+        INNER JOIN MinuteMET USING(device_id, date, time)
+        INNER JOIN MinuteIntensity USING(device_id, date, time)
+        INNER JOIN MinuteSteps USING(device_id, date, time)
+        LEFT JOIN MinuteSleep USING(device_id, date, time)
+    )
+    SELECT
+        time,
+        CAST(AVG(MET) AS NUMERIC(3,1)) AS "work_met"
+    FROM Minute
+    WHERE
+        time BETWEEN '09:00:00' AND '17:00:00'
+    GROUP BY
+        time
+    ORDER BY
+        1 ASC;
+    ```
+- Question 11:
+    ```{postgresql}
+    /*This file will give me a count of sleep records by time of day for all users in all days*/
+    SELECT
+        time,
+        COUNT(*)
+    FROM MinuteSleep
+    WHERE
+        EXTRACT(SECOND FROM time) = 0
+    GROUP BY
+        time
+    ORDER BY
+        time ASC;
+    ```
 ---
 
