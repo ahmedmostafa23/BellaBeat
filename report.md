@@ -317,15 +317,13 @@ WITH Minute AS (
 
 1. Sleep
    - From the exploratory results, It can be seen that the MinuteSleep table seems to only have records when the person is actually sleeping and when wearing the device. 10 device_id were missing from the MinuteSleep table. which indicates that a portion of the users 10/33, do not wear the device when sleeping.  
-   recommendation: in the future, investigate why users do not sleep with the device, or add some features that encourage sleeping with it.  
    - There is no relation between sleep_value and met or calories or intensity or steps. However, it is strange that some people have a sleep value of 1 (asleep) and they have a very high MET or calorie count. people asleep walking < 20 steps per minute, This indicates the device incorrectly measures activity, or in an extreme scenario: people are sleep walking! Thus, There is no way to predict whether a person is asleep or not using the other metrics. the sleep table can only be used to predict what time users wake up and go to sleep. This is a limitation of the dataset, because the not all users have worn the device while sleeping. 
-   recommendation: in the future, add a feature to the app or device e.g. similar to Netflix's "are you still watching?", or prompt them for their usual sleep schedules and concentrate on that time.  
      
 
 2. Investigating correlations between MET, intensity, steps and calories
     - calories/min depend on the level of activity, weight, height, age, pregnancy and etc. and thus varies greatly from person to the other, so calories as a number is not good metric for this investigation. however, we maybe able to find the baseline calorie for each user (at MET=1, but MET IS the ratio ratio, so MET will be used instead)  
     - One thing should be for sure: at MET =1, steps should be =0, intensity =0 and calories = baseline. records where that is not satisfied (below <500 rows) have been removed from the analysis. 
-    - The relation between met and percentage baseline is linear, but unit stepped with a few “intersections”. i.e. each MET range covers a range of percentage baseline calories. which seems to tell that MET is by definition, the baseline calories ratio. and that MET is approximated to be whole numbers by the device.  recommendation: don't approximate. it produces misleading data
+    - The relation between met and percentage baseline is linear, but unit stepped with a few “intersections”. i.e. each MET range covers a range of percentage baseline calories. which seems to tell that MET is by definition, the baseline calories ratio. and that MET is approximated to be whole numbers by the device.  
     - The relation between cadence and baseline calories seems to be linear but is clustered heavily around the trendline. indicating that the percentage baseline of calories depends on factors other than just walking, but perhaps from user to user or other kinds of activity. i.e. the device users don't just walk or run.  
     - For intensity, there seems to be something quite strange. people having baseline calories of 10+ have an intensity of just 1! what should happen is that MET >3 should be at Intensity > 1! this maybe an indication that the device is measuring incorrectly.  
     ![MET (y-axis) vs percentage calories from baseline(x-axis) for each record](graphs/correlations.png)    
@@ -336,7 +334,6 @@ WITH Minute AS (
     - light ones: 855 records are not zero. no time but no distance. in fact, 99th percentile is 1.86 km/h. thus I will let moderate be anything > 1.86km/h  
     - moderate ones: 453 records have speed of > 1.86. with the 99th percentile at 4.2 km/h. Thus active will be defined as anything > 4.2 km/h
     - The interesting finding here is that different users and minutes can have the same level of activity but vary greatly in speed. which means that either the device is wrong, or that not all users have running or walking as their activity. Unfortunately, there is no other way to know what their activities are.  
-    recommendation: In the future, the company can ask the users on the device or app to enter what the activity they are doing is, or what is their job or the nature of their job. if the users do not respond to these, a point system could be set up to entice them to input their information.
       
       
 4. Answering the Questions!
@@ -396,13 +393,11 @@ WITH Minute AS (
     - for activity in general, Sunday is the least, and Tuesday is the most.
      ![Total sleep for all users ay days of week](graphs/question7-b.png)
     We can conlude that on weekends, especially Sunday, users tend to relax and do the least activity, and sleep the most.  
-      --> Recommendation: have the device push them to their goals on those days, or provide a fun alternative that they can enjoy while resting. provide them with a weekly summary so they can feel good about themselves. The company can also add features to the device that sends a message on a weekend e.g. "it's the weekend! enjoy getting uninterrupted sleep" or something similar.
       
 
  - Q8: is their job sedentary or active?
     - To answer this, look at the avg MET for each user from 9:00 am to 5:00 pm for each day, vs outside that time (except from 10:00pm to 7:00am, where they are supposedly sleeping)
     - some users have work met > none work, and others have the opposite, others have the same, however the avg values (for MET >2 records) are quite low. most users have a sedentary job.
-    recommendation: sedentary jobs are known to have adverse health effects because of sitting for too long or staring at the screen. it could be nice to add some features to remind the user to take a break or stare away from the screen or get up and stretch or etc.
       
     ![Average Calories at work, vs outside work per user.](graphs/question8.png)
 
@@ -418,7 +413,6 @@ WITH Minute AS (
     - the day with the lowest average minutes worn is Thursday then Sunday then Saturday, and the most is Monday.
       ![img.png](graphs/question10-b.png)
     --> so less people wear the device on Monday and closely followed by the weekend. and when people actually put on the device on the weekends, they use it for the least time  
-      recommendation: we need to add features or messages to encourage them to use on the weekend, i.e. to help them relax.
 
 
  - Q11 :when do they wake up and go to sleep?
@@ -426,5 +420,33 @@ WITH Minute AS (
     perhaps in the future the company can add a feature to know exactly where each user woke up. e.g. by allowing the user to set an alarm on the device, and record when the user turns off his device.  
  
         ![Number of sleeping minutes at different times of day](graphs/question11.png)
+---
+
+#5-Act
+
+####Now that the analysis is complete, it is time to make recommendations that will drive data driven decisions for BellaBeat's marketting strategy
+
+1. Investigate why users do not sleep with the device, or add some features that encourage sleeping with it. A quick google search shows that smart devices emit radiation, and is why users od not sleep with it. that could be the cause!  
+   
+
+2. Because we don't know when users exactly fall asleep, Add a feature to the app or device e.g. similar to Netflix's "are you still watching?", or prompt them for their usual sleep schedules and concentrate on that time.  
+
+
+3. Ask the users on the device or app to enter what the activity they are doing is, or what is their job or the nature of their job. if the users do not respond to these, a point system could be set up to entice them to input their information.  
+
+
+4. Have the device push them to their goals on the weekend, or provide a fun alternative that they can enjoy while resting. provide them with a weekly summary so they can feel good about themselves. The company can also add features to the device that sends a message on a weekend e.g. "it's the weekend! enjoy getting uninterrupted sleep" or something similar. 
+
+
+5. Sedentary jobs are known to have adverse health effects because of sitting for too long or staring at the screen. it could be nice to add some features to remind the user to take a break or stare away from the screen or get up and stretch or etc.
+
+
+6. Add features or messages to encourage them to use the device on the weekend, i.e. to help them relax.
+
+
+7. Do not let the device approximate MET. it produces misleading data.
+
+
+8. Have HRV be the main focus of the device/app, and make that the main marketting feature. because HRV is truly the only metric that the device can use to predict whether a user is acutally healthy.
 ---
 
