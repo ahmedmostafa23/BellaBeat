@@ -325,10 +325,10 @@ WITH Minute AS (
 2. Investigating correlations between MET, intensity, steps and calories
     - calories/min depend on the level of activity, weight, height, age, pregnancy and etc. and thus varies greatly from person to the other, so calories as a number is not good metric for this investigation. however, we maybe able to find the baseline calorie for each user (at MET=1, but MET IS the ratio ratio, so MET will be used instead)  
     - One thing should be for sure: at MET =1, steps should be =0, intensity =0 and calories = baseline. records where that is not satisfied (below <500 rows) have been removed from the analysis. 
-    - The relation between met and percentage baseline is linear, but unit stepped with a few “intersections”. i.e. each MET range covers a range of percentage baseline calories. which seems to tell that MET is by definition, the baseline calories ratio. and that MET is approximated to be whole numbers by the device.  
+    - The relation between met and percentage baseline is linear, but unit stepped with a few “intersections”. i.e. each MET range covers a range of percentage baseline calories. which seems to tell that MET is by definition, the baseline calories ratio. and that MET is approximated to be whole numbers by the device.  recommendation: don't approximate. it produces misleading data
     - The relation between cadence and baseline calories seems to be linear but is clustered heavily around the trendline. indicating that the percentage baseline of calories depends on factors other than just walking, but perhaps from user to user or other kinds of activity. i.e. the device users don't just walk or run.  
     - For intensity, there seems to be something quite strange. people having baseline calories of 10+ have an intensity of just 1! what should happen is that MET >3 should be at Intensity > 1! this maybe an indication that the device is measuring incorrectly.  
-    
+    ![MET (y-axis) vs percentage calories from baseline(x-axis) for each record](graphs/correlations.png)    
 
 3. DailyActivity  
 
@@ -388,18 +388,20 @@ WITH Minute AS (
 
 
  - Q7: do weekends affect the performance and sleep?   
-    - it can be seen that the highest very active weekday is Tuesday->Wed->Thu->Sat->Fri->Sun. so Sunday, a weekend, is the lowest day of the week. 
-    - For moderate activity, Friday is the least, while Tuesday is the highest  
+    - it can be seen that the least very active day is Sunday, a weekend day, is the lowest day of the week.
+    - For moderate activity, Friday is the least (which is just before the weekend!), while Tuesday is the highest.  
+    ![Total active minutes for all users at days of week](graphs/question7-a.png)
     - For sleep, only consider users with >2 records. the average sleep on days is highest on Saturday and Sunday, but lowest on Monday and Thursday.
-    - for light activity, Sunday is the least and Monday are the least, Tuesday is the most
     - for activity in general, Sunday is the least, and Tuesday is the most.
+     ![Total sleep for all users ay days of week](graphs/question7-b.png)
     We can conlude that on weekends, especially Sunday, users tend to relax and do the least activity, and sleep the most.  
       --> Recommendation: have the device push them to their goals on those days, or provide a fun alternative that they can enjoy while resting. provide them with a weekly summary so they can feel good about themselves. The company can also add features to the device that sends a message on a weekend e.g. "it's the weekend! enjoy getting uninterrupted sleep" or something similar.
       
 
  - Q8: is their job sedentary or active?
     - To answer this, look at the avg MET for each user from 9:00 am to 5:00 pm for each day, vs outside that time (except from 10:00pm to 7:00am, where they are supposedly sleeping)
-    - some users have work met > none work, and others have the opposite, others have the same. not enough evidence sadly.
+    - some users have work met > none work, and others have the opposite, others have the same, however the avg values (for MET >2 records) are quite low. most users have a sedentary job.
+    recommendation: sedentary jobs are known to have adverse health effects because of sitting for too long or staring at the screen. it could be nice to add some features to remind the user to take a break or stare away from the screen or get up and stretch or etc.
       
     ![Average Calories at work, vs outside work per user.](graphs/question8.png)
 
@@ -410,13 +412,16 @@ WITH Minute AS (
 <!---no graph or table needed here-->
 
   - Q10: do they still wear it on the weekends?  
-    - the least worn day was Monday, followed by Sunday, Saturday and Friday (all 120-126). the rest of the days are 147-152
-    - the least day with minutes worn is Sunday and Saturday followed closely by Monday and Friday
-    - the day with the lowest average minutes worn is Thursday then Sunday then Saturday, and the most is Monday.  
+    - the least worn day was Monday, followed by Sunday, Saturday and Friday
+      ![Number of users per day of week.](graphs/question10-a.png)
+    - the day with the lowest average minutes worn is Thursday then Sunday then Saturday, and the most is Monday.
+      ![img.png](graphs/question10-b.png)
     --> so less people wear the device on Monday and closely followed by the weekend. and when people actually put on the device on the weekends, they use it for the least time  
       recommendation: we need to add features or messages to encourage them to use on the weekend, i.e. to help them relax.
 
 
  - Q11 :when do they wake up and go to sleep?
    - they start waking up at 6:00 am and go to sleep at 9:30pm.  
-    perhaps in the future the company can add a feature to know exactly where each user woke up. e.g. by allowing the user to set an alarm on the device, and record when the user turns off his device.
+    perhaps in the future the company can add a feature to know exactly where each user woke up. e.g. by allowing the user to set an alarm on the device, and record when the user turns off his device.  
+ 
+![Number of sleeping minutes at different times of day](graphs/question11.png)
