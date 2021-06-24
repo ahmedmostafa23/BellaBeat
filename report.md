@@ -356,20 +356,29 @@ WITH Minute AS (
 
 
  - Q3: What is the thing they enjoy most/least about their product?  
-   --> 9/33 users do not wear their device while sleeping (and 6 more could be excluded for wearing for less than 5 days). so we can conclude that users dislike most to sleep with the device. other than that, there is not enough data.
-
-
+   --> 9/33 users do not wear their device while sleeping (and 6 more could be excluded for wearing for less than 5 days). so we can conclude that users dislike most to sleep with the device. other than that,  
+<!---no graph or table needed here-->
+   
  - Q4: What is the most frequent time of day for usage?  
    --> Most people wear their device most of the day, but in general, people who do take off their devices, take them off from 10:00am to 4:00pm, but they seem to put the device back on at 12:00, which is extremely strange and needs further investigating. 
+   <!---no graph needed here-->
 
 
  - Q5: How much running did they do this week? how long are their intervals?  
   --> It is difficult to say whether the users ran or not. because very active for example should have users faster than 4.2km/h, but there are slower users. so are they running, or are they doing something else  
-   -->It can be attempted to guess how many users are running based on their speed and intensity. at a certain pace, as discussed in the above correlations.
+   -->It can be attempted to guess how many users are running based on their speed and intensity. at a certain pace, as discussed in the above correlations.  
+   
+| stat | very active minutes | moderately active minutes|
+   | :----: | :----: | :---------: |
+   | avg | 35.1 | 22.7 |
+    | 25th | 9.3 | 9 |
+    | 50th | 27 | 16 |
+    |75th | 50.8 | 29 |
 
-
- - Q6: Are those users’ health metrics within the healthy range?
-  --> The only indicator of health is the HRV in the SecondHRV table. It was found that the baseline night and day time for people. They’re all within 58-95, and that day time < night time. so the people are fairly healthy! especially that the 95th percentile is at 113 and 1st percentile at 48. are still within the healthy range of 40~200.
+   neglecting light activity at speeds <1.86km/h which is not running nor park strolling, It can be seen that the average activity time for very active runners is 35.1minutes/day, while for moderately active runners is 22.7minutes/day, with 50% of runners running >16 minutes a day.
+<br>
+ - Q6: Are those users’ health metrics within the healthy range?  
+   - The only indicator of health is the HRV in the SecondHRV table. There is a limitation of only 14 users have recorded their HRV, it is needed to encourage more users into measuring this statistic, which is arguably the most important. it seems that the users do not have any idea how important it is. It was found that the baseline night (7:00am to 10:00pm, where they typically go to sleep) and day time for people. They’re all within 58-95, and that day time < night time. so the people are fairly healthy! especially that the 95th percentile is at 113 and 1st percentile at 48. are still within the healthy range of 40~200.
    
 ![Day vs night average HRV for users](graphs/question3.png)  
    
@@ -391,12 +400,14 @@ WITH Minute AS (
  - Q8: is their job sedentary or active?
     - To answer this, look at the avg MET for each user from 9:00 am to 5:00 pm for each day, vs outside that time (except from 10:00pm to 7:00am, where they are supposedly sleeping)
     - some users have work met > none work, and others have the opposite, others have the same. not enough evidence sadly.
+      
+    ![Average Calories at work, vs outside work per user.](graphs/question8.png)
 
 
  - Q9: do they wear the device while sleeping?
     - 10/33 users did not wear it.
-    - the ones who did wear it, I expected ~12500 records for 6.8h of sleep every night. only 10/24 have >10000 records for the whole month.
-
+    - the ones who did wear it, I expected ~12500 records for 6.8h of sleep every night. only 10/24 have >10000 records for the whole month. it could be due to lack of sleep, but is unlikely and needs further investigation.
+<!---no graph or table needed here-->
 
   - Q10: do they still wear it on the weekends?  
     - the least worn day was Monday, followed by Sunday, Saturday and Friday (all 120-126). the rest of the days are 147-152
