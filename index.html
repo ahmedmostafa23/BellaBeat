@@ -1,0 +1,826 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>report.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="ask-and-plan">1-Ask and Plan</h1>
+<h2 id="who-are-bellabeat">Who are BellaBeat?</h2>
+<p>Bellabeat is a manufactuer of smart health products for women. It is a global company since 2016. They own several physical stores, their own e-commerce channel, website and online retailers (amazon and such).<br>
+BellaBeat manufactures several products. The products are ordinary looking jewelry, you won’t realize they’re (too) smart!</p>
+<ul>
+<li>BellaBeat Leaf: smart bracelet, necklace or clip.</li>
+<li>BellaBeat Time: watch, but aso classic looking</li>
+<li>BellaBeat Spring: smart water bottle</li>
+</ul>
+<p>Owners of BellaBeat devices enjoy the BellaBeat app: an app that receives data about vitals from smart devices about activity, sleep, stress, menstruation and the users’ habits.<br>
+BellaBeat membership subscription: 24/7 access to personalized guidance on the above problems, beauty and goals.</p>
+<h4 id="bellabeat-marketing-strategy---traditional-radio-billboards-print-e.g.-magazines-television-but-they-also-extensively-focus-on-digital">BellaBeat Marketing Strategy: - traditional (radio, billboards, print e.g. magazines, television), but they also extensively focus on digital</h4>
+<ul>
+<li>ads in google search, google display network (the ads by google you find on pages, phone apps and etc.), youtube, active ig and fb pages, and twitter interactions</li>
+<li>they use google display network around key marketing dates<br>
+The CEO requires us to analyze the usage data of a device to gain insight on how users are already using said smart devices.<br>
+then she wants high-level recommendations on how said insight can inform the marketing strategy</li>
+</ul>
+<h5 id="to-learn-more-about-bellabeat-you-can-visit-their-website.">To learn more about BellaBeat, you can visit their <a href="https://bellabeat.com">website.</a></h5>
+<hr>
+<h2 id="the-scope-of-work">The Scope of Work</h2>
+<h3 id="my-role">My Role</h3>
+<ul>
+<li>Me: junior data analyst</li>
+<li>position: marketing analysis team</li>
+<li>Company : Bellabeat, manufacturer of smart health products for women</li>
+<li>My task: analyze one of their product’s data</li>
+</ul>
+<h4 id="analysis-task-i-will-be-analyzing-data-from-customer’s-use-of-the-products.">Analysis task: I will be analyzing data from customer’s use of the products.</h4>
+<p>-i.e. data collected by the device itself from customers, and sent to us.</p>
+<h3 id="stakeholders---my-team-and-the-executive-team">Stakeholders: - My team and the Executive Team</h3>
+<ul>
+<li>CCO (founder)</li>
+<li>Mathematician, executive and cofounder.</li>
+</ul>
+<h4 id="deliverables-presentation-and-recommendations">Deliverables: presentation and recommendations</h4>
+<hr>
+<h3 id="the-analysis-problem">The Analysis Problem</h3>
+<p>Problem: explore the use data of one of our health products and app to find insights, patterns and trends about the users’ usage to be used in making high-level marketing recommendations.<br>
+The dataset is data collected by the app/device.</p>
+<h4 id="potential-questions-that-need-to-be-answered">Potential Questions that need to be answered:</h4>
+<ul>
+<li>What do they do the most/least with their product?</li>
+<li>How long do they wear it everyday?</li>
+<li>What is the thing they enjoy most/least about their product?</li>
+<li>What features seem missing that we can add to the product?</li>
+<li>who are the people who use our product the most/least? age/nationality</li>
+<li>What is the most frequent time of day for usage?</li>
+<li>on a scale from 0-5, rate your experience with the product, why?</li>
+<li>How much running did they do this week? how long are their intervals?</li>
+<li>Are there any men using our products?</li>
+<li>what is the most unusual thing they do with the product?</li>
+<li>What is the average intensity of any exercise?</li>
+<li>Are those users’ health metrics within the healthy range?</li>
+</ul>
+<h4 id="hypothesis-they-use-the-product-the-most-for-running-and-tracking-their-menstrual-period-or-pregnancy.">Hypothesis: they use the product the most for running and tracking their menstrual period or pregnancy.</h4>
+<h4 id="required-characteristics-of-the-dataset">Required characteristics of the dataset:</h4>
+<ol>
+<li>Population: there have been 100000 sold Bellabeat Leaf units from 2013 to 2017. I’m going to assume 100000 unique subjects.<br>
+with a margin of error of 10%, a confidence level of 10% I should have a sample size of at least 68 users.</li>
+<li>Detailed non aggregate daily data of the usage, with intervals.</li>
+<li>Rating about features of the product, or the product as a whole.</li>
+<li>Also includes male users if possible.</li>
+<li>Women of different ages, race, nationality, and physically or mentally challenged women, as well as women of several income brackets</li>
+<li>preferably the data needs to be up to date as possible, with COVID-19 happening and all.</li>
+</ol>
+<hr>
+<h1 id="prepare">2-Prepare</h1>
+<h4 id="data-collection">1. Data Collection</h4>
+<ul>
+<li>The dataset used was not going to be a dataset collected by BellaBeat devices themselves, it was recommended to use FitBit proxy data. I have searched the internet for proxy BellaBeat data, but only FitBit or apple watch data was available, and the FitBit data had more users.</li>
+<li>It is a proxy dataset collected by Amazon Mechanical Turk online survey 2 days In December 2016.</li>
+<li>The data was collected from 30 FitBit consenting users who gave their information about minute-level output for physical activity, heart rate, cadence, MET and sleep.</li>
+<li>This is 3rd party data. The users sent their data to Zenodo who sent to the Kaggle dataset owner Mobius, and the dataset was downloaded from Kaggle.</li>
+<li>It is unclear why the data was collected in the first place, but it is assumed that it was general analysis of smart health device activity, or as practice for students or Kaggle competitions.</li>
+<li>It is not possible to know whether all the people who replied are men or women, It is also impossible to know if any of them are lying or do not have a FitBit device at all, but that is unlikely.</li>
+</ul>
+<h4 id="meta-data">2.Meta-Data</h4>
+<ul>
+<li>The dataset has no metadata at all whatsoever. some of the fields were researched on the FitBit device API website, and by reading medical articles and definitions.</li>
+<li>4 unimportant columns, or ones that could not be reserarched were removed from the dataset.</li>
+</ul>
+<h4 id="software-used">3. Software used</h4>
+<ul>
+<li>The dataset is large. some files have 3.5 million records!</li>
+<li>It has been decided to use a database to store the data and do the analysis there. a database called FitBitData was created in PostgreSQL on my device.</li>
+<li>Further metadata has been added to the dataset, with the proper data types, precision, format, constraints and etc.</li>
+<li>Tables in postgreSQL database were created with the coressponding names, datatypes, constraints and etc.</li>
+</ul>
+<h4 id="checking-if-dataset-can-still-answer-original-questions.">4. Checking if dataset can still answer original questions.</h4>
+<ul>
+<li>
+<p>By looking at the dataset I can see that there are 2 giant joined tables:</p>
+<ol>
+<li>by minute (sleep, calorie, MET, steps, and intensity)</li>
+<li>by day (steps, distance, active minutes and calories)</li>
+<li>There are also the HRV and Weight tables.</li>
+</ol>
+</li>
+<li>
+<p>There are some interesting correlations worth investigating. i.e. the relation between calories, MET and intensity.</p>
+</li>
+<li>
+<p>I also want to find the avg pace in steps/km for different levels of activity or speed of a person. I also want to see the relation between MET, steps vs sleep_value</p>
+</li>
+<li>
+<p>Overall, the dataset has enough attributes to answer some of the questions. It is missing a few such as detailed activity, demographics, gender, job, menstruation cycle info. I can try to infer the nature of their job: is it sedentary? or active?</p>
+</li>
+<li>
+<p>However, There is no way to tell if the data is accurate or incomplete. it did not mention how many records. But it did say 30 subjects, and they were 33 unique device_id values.</p>
+</li>
+<li>
+<p>The dataset has one huge limitation though: It is from 2016! we’re in 2021 now. this is a huge problem, because in 2021 we have problems such as COVID-19 where people’s activity has highly changed.</p>
+</li>
+<li>
+<p>The dataset is also not cited, There is also no clue about the creator of the dataset.</p>
+</li>
+</ul>
+<h4 id="data-ethics-bias-and-privacy">5. Data Ethics, Bias and Privacy</h4>
+<ul>
+<li>All the users gave their consent to the data. there is no personal information whatsoever, so the data does even need anonymization.</li>
+<li>If the users of this dataset could be contacted, they should be contacted to inform them of our decision to use their data for our company’s marketing purposes, and our procedures.</li>
+<li>All of data is supposedly self reported so this decreases the possibility of some forms of bias. however, as stated above, there is no way to know age, gender, demographics or whatever.</li>
+</ul>
+<hr>
+<h1 id="process">3-Process</h1>
+<p>The data has been backed up to GitHub in the latest commit before I start the process stage and start cleaning the dataset.</p>
+<h3 id="data-integrity">1.Data Integrity:</h3>
+<ul>
+<li>accuracy: there seems to be a problem with some of the fields. e.g. MET should be 1 if there is no exercise being done, but they all have 10</li>
+<li>consistency: The dataset has been made consistent by keeping the same fields with the same names everywhere in the database with the same type, format and precision</li>
+<li>completeness: the dataset is complete. nothing was lost during download or conversion from .csv files to the postgreSQL FitBitData Database.</li>
+</ul>
+<h3 id="cleaning">2. Cleaning:</h3>
+<p>The tables will now be explored. the following will be done to each table:</p>
+<ol>
+<li>Constraints will be added to the tables and columns (enumeration, set membership, cross column, range, not NULL etc.)</li>
+<li>The tables will be checked for duplicate rows. if any are found they will be removed</li>
+<li>The tables will be checked for NULL values. if any are found they will be dealt with accordingly.</li>
+<li>Some columns maybe combined into a single column, other columns maybe processed or divided into several other columns</li>
+<li>String types will be checked for excessive whitespace, and removed if any.</li>
+</ol>
+<h2 id="lets-get-started-with-each-table">Let’s get started with each table!</h2>
+<ul>
+<li>
+<p>Weight table:</p>
+<ul>
+<li>There are no duplicate records</li>
+<li>There are no null values</li>
+<li>Constraints have been added to weight_kg, bfr, bmi and height_m to be &gt;= 0, and bfr &lt;= 1</li>
+<li>Device_id to check that it is exactly 10 characters long.</li>
+<li>Split the date_of_weigh column into 2 columns: date and time</li>
+<li>Added NOT NULL to date and time columns</li>
+<li>All the fields are numeric and typed perfectly. so no need to remove white space or get the value of columns.</li>
+<li>No records have been deleted from the table.</li>
+</ul>
+</li>
+<li>
+<p>DailySleep Table</p>
+<ul>
+<li>There are no NULL values</li>
+<li>There are 3 duplicate values. they have been removed</li>
+<li>A constraint for the sleep_value column has been set to either be 1, 2 or 3.</li>
+<li>device_id check to be exactly 10 characters long</li>
+<li>minutes_in_bed check to be &gt;=0 and &lt;= 1440 (because you can’t spend negative minutes, or greater than a whole day in a single day)</li>
+<li>minutes_asleep check to also be &gt;=0 and &lt;= minutes_in_bed.</li>
+<li>Since all of the days start at 00:00:00, I’m just going to create a date column without the time, and discard the day_start column.</li>
+</ul>
+</li>
+<li>
+<p>MinuteSteps Table</p>
+<ul>
+<li>device_id check 10 characters long.</li>
+<li>Table has no duplicate rows.</li>
+<li>Table has not a single NULL cell.</li>
+<li>minute_start will be split to 2 columns, date and time. both are set to NOT NULL.</li>
+<li>minute_start column has been deleted.</li>
+<li>Constraint to the steps column so that it can never be negative.</li>
+</ul>
+</li>
+<li>
+<p>SecondHRV Table</p>
+<ul>
+<li>Table does not have a single NULL cell.</li>
+<li>LENGTH(device_id) = 10 constraint</li>
+<li>HRV check &gt;= 0</li>
+<li>second_start will be split into date and time columns. both set to NOT NULL.</li>
+</ul>
+</li>
+<li>
+<p>DailyActivity Table</p>
+<ul>
+<li>Constraint LENGTH(device_id) = 10;</li>
+<li>day_start column has been replaced with “date”</li>
+<li>Table has no duplicates and not a single NULL cell.</li>
+<li>331/940 records do NOT add up active distances to total distance:
+<ul>
+<li>Corrected columns where the manual sum of active distances - total_sum &gt;= -0.05km, so that the total_sum will be the sum of them.</li>
+<li>Created a logged_distance column such that for columns where the manual sum of the active distances - total_sum &lt; -0.05km, the difference goes into the logged_distance column.</li>
+</ul>
+</li>
+<li>Now, constrain the table such that
+<ul>
+<li>active_distance + logged_distance = total_distance</li>
+<li>the sum of all active minutes SHOULD be = 1440. because a single day has 1440 minutes and sedentary minutes sitting down or sleeping. so if a person does not add up to 1440 minutes a day, it means he has taken his FitBit device off for a part of the day. create a new column that has the time where the user took off his fitbit.</li>
+</ul>
+</li>
+<li>Now, constrain the table such that active_minutes + not wearing = 1440</li>
+</ul>
+</li>
+<li>
+<p>MinuteIntensity</p>
+<ul>
+<li>Table does not have a single NULL cell.</li>
+<li>No duplicate rows</li>
+<li>The minute_start column will be divided into date and time, and they will be set to NOT NULL.</li>
+<li>device_id constraint length = 10</li>
+<li>intensity must have a set membership of either 0,1,2,3</li>
+</ul>
+</li>
+<li>
+<p>MinuteMET</p>
+<ul>
+<li>Table does not have a single NULL value.</li>
+<li>Table has no duplicate records.</li>
+<li>constraint to device_id is length = 10</li>
+<li>minute_start will be divided to date and time columns.</li>
+<li>met will be constrained to always be &gt;= 1</li>
+<li>There seems to be a problem here. some met values are 0. which violate the constraint. 7 rows that violate the constraint have been deleted.</li>
+<li>The numbers here do not make sense. the value of MET should be 1 if the person is sedentary while lying down or completely idle. and 16 if the user is an Olympic athlete who can see the finish line. most people in the table have 10, and some people have 100+!! The only logical case is that the numbers in the table are multiplied by 10. because most people have 10, when they should have 1. So all MET values were divided by 10.</li>
+<li>Some values after division would be &lt;1, and would violate the constraint. Only a single record violated that constraint, it has been deleted.</li>
+</ul>
+</li>
+<li>
+<p>MinuteSleep</p>
+<ul>
+<li>table has no NULL values</li>
+<li>There are 543 duplicate records!</li>
+<li>minute_start will be divided into date and time cols with NOT NULL</li>
+<li>device_id length constrained to 10</li>
+<li>sleep_value constrained to {1,2,3,}</li>
+</ul>
+</li>
+<li>
+<p>MinuteCalories</p>
+<ul>
+<li>Table has no NULL values, and no whole duplicate records.</li>
+<li>constrained device_id length = 10</li>
+<li>Split minute_start into date and time. both constrained to NOT NULL.</li>
+<li>constrain calories to always be &gt; 0</li>
+</ul>
+</li>
+</ul>
+<h3 id="backup">3. Backup</h3>
+<ul>
+<li>Before proceeding with the Analysis phase, the database has been backed up</li>
+</ul>
+<hr>
+<h1 id="analyze">4-Analyze</h1>
+<p>In this phase, 3 types of analysis will be done:</p>
+<ol>
+<li>Exploratory analysis:
+<ul>
+<li>Which categories/users/date/time have very low count compared to others, what am I going to do with them?</li>
+<li>Summary of each column (aggregate: min, max, sum, count, unique count, percentiles and outliers)</li>
+<li>Which categories/users have very low count compared to others, what am I going to do with them?</li>
+<li>Investigate any anomalies/outliers found.</li>
+<li>do I need to divide the dataset into subsets? e.g. active vs. inactive? anomalies and outliers?</li>
+</ul>
+</li>
+<li>Checking for correlations
+<ul>
+<li>sleep vs calories or met or intensity</li>
+<li>calories vs steps or intensity or met</li>
+</ul>
+</li>
+<li>Answering the questions using data</li>
+</ol>
+<h3 id="exploratory-analysis">1. Exploratory Analysis</h3>
+<ul>
+<li>
+<p>Numerical columns could be summarized with min/max/sum/NOT NULL count/percentiles and outliers.</p>
+</li>
+<li>
+<p>while categorical (ordinal or nominal) are summarized as count, NOT NULL count, unique count, and the frequency of each category.</p>
+</li>
+<li>
+<p>while date/time columns will get min/max and count NOT NULL.</p>
+</li>
+<li>
+<p>Strategy: join the minutes tables all into a “minute table”. Since they all have 33 unique devices and almost the same number of rows, they will be INNER JOINed to get a full record (except the sleep table, it has a lot less records, so will be LEFT JOINed)</p>
+
+<table>
+<thead>
+<tr>
+<th align="center"><strong>column name</strong></th>
+<th align="center"><strong>data type</strong></th>
+<th align="center"><strong>sub type</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">device_id</td>
+<td align="center">categorical</td>
+<td align="center">nominal</td>
+</tr>
+<tr>
+<td align="center">date</td>
+<td align="center">date</td>
+<td align="center">N/A</td>
+</tr>
+<tr>
+<td align="center">time</td>
+<td align="center">time</td>
+<td align="center">N/A</td>
+</tr>
+<tr>
+<td align="center">datetime</td>
+<td align="center">timestamp</td>
+<td align="center">N/A</td>
+</tr>
+<tr>
+<td align="center">cadence</td>
+<td align="center">numerical</td>
+<td align="center">discrete</td>
+</tr>
+<tr>
+<td align="center">sleep</td>
+<td align="center">categorical</td>
+<td align="center">ordinal</td>
+</tr>
+<tr>
+<td align="center">calories</td>
+<td align="center">numerical</td>
+<td align="center">continuous</td>
+</tr>
+<tr>
+<td align="center">met</td>
+<td align="center">numerical</td>
+<td align="center">discrete</td>
+</tr>
+<tr>
+<td align="center">intensity</td>
+<td align="center">categorical</td>
+<td align="center">ordinal</td>
+</tr>
+</tbody>
+</table></li>
+<li>
+<p>Sleep</p>
+<ul>
+<li>From the exploratory results, It can be seen that the MinuteSleep table seems to only have records when the person is actually sleeping and when wearing the device. 10 device_id were missing from the MinuteSleep table. which indicates that a portion of the users 10/33, do not wear the device when sleeping.</li>
+<li>There is no relation between sleep_value and met or calories or intensity or steps. However, it is strange that some people have a sleep value of 1 (asleep) and they have a very high MET or calorie count. people asleep walking &lt; 20 steps per minute, This indicates the device incorrectly measures activity, or in an extreme scenario: people are sleep walking! Thus, There is no way to predict whether a person is asleep or not using the other metrics. the sleep table can only be used to predict what time users wake up and go to sleep. This is a limitation of the dataset, because the not all users have worn the device while sleeping.</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>
+<p>Investigating correlations between MET, intensity, steps and calories</p>
+<ul>
+<li>calories/min depend on the level of activity, weight, height, age, pregnancy and etc. and thus varies greatly from person to the other, so calories as a number is not good metric for this investigation. however, we maybe able to find the baseline calorie for each user (at MET=1, but MET IS the ratio ratio, so MET will be used instead)</li>
+<li>One thing should be for sure: at MET =1, steps should be =0, intensity =0 and calories = baseline. records where that is not satisfied (below &lt;500 rows) have been removed from the analysis.</li>
+<li>The relation between met and percentage baseline is linear, but unit stepped with a few “intersections”. i.e. each MET range covers a range of percentage baseline calories. which seems to tell that MET is by definition, the baseline calories ratio. and that MET is approximated to be whole numbers by the device.</li>
+<li>The relation between cadence and baseline calories seems to be linear but is clustered heavily around the trendline. indicating that the percentage baseline of calories depends on factors other than just walking, but perhaps from user to user or other kinds of activity. i.e. the device users don’t just walk or run.</li>
+<li>For intensity, there seems to be something quite strange. people having baseline calories of 10+ have an intensity of just 1! what should happen is that MET &gt;3 should be at Intensity &gt; 1! this maybe an indication that the device is measuring incorrectly.<br>
+<img src="graphs/correlations.png" alt="MET (y-axis) vs percentage calories from baseline(x-axis) for each record"></li>
+</ul>
+</li>
+<li>
+<p>DailyActivity</p>
+<ul>
+<li>Only records with active minutes &gt; 0 and active distance &gt; 0 will be studied. a new column called average speed will be created which is distance/time in km/h</li>
+<li>light ones: 855 records are not zero. no time but no distance. in fact, 99th percentile is 1.86 km/h. thus I will let moderate be anything &gt; 1.86km/h</li>
+<li>moderate ones: 453 records have speed of &gt; 1.86. with the 99th percentile at 4.2 km/h. Thus active will be defined as anything &gt; 4.2 km/h</li>
+<li>The interesting finding here is that different users and minutes can have the same level of activity but vary greatly in speed. which means that either the device is wrong, or that not all users have running or walking as their activity. Unfortunately, there is no other way to know what their activities are.</li>
+</ul>
+</li>
+<li>
+<p>Answering the Questions!</p>
+</li>
+</ol>
+<ul>
+<li>Q1: What do they do the most/least with their product?<br>
+–&gt; The average intensity level will be averaged for each user, for each day of the study. it has been found that the average user spends 81% of his device wearing time being sedentary, 16% doing light activity, 1% doing moderate activity and 2% doing very intense activity. of that sedentary, sleeping is included.
+<table>
+<thead>
+<tr>
+<th align="center"><strong>very</strong></th>
+<th align="center"><strong>moderate</strong></th>
+<th align="center"><strong>light</strong></th>
+<th align="center"><strong>inactive</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1.7%</td>
+<td align="center">1.2%</td>
+<td align="center">15.8%</td>
+<td align="center">81.3%</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p><img src="graphs/question1.png" alt="Pie chart of those percentages"></p>
+<ul>
+<li>
+<p>Q2: How long do they wear it everyday?</p>
+<ul>
+<li>For the 31 days of the dataset, less than 25% of days were worn below 1000 minutes (70% of the day), while the median is at 1440 which is the whole day</li>
+<li>only 4/33 users wore the device for less than 68% of the month. with the least worn times being at night<br>
+<img src="graphs/question2.png" alt="Count of wearing the device at different times of day"></li>
+</ul>
+</li>
+<li>
+<p>Q3: What is the thing they enjoy most/least about their product?</p>
+<ul>
+<li>9/33 users do not wear their device while sleeping (and 6 more could be excluded for wearing for less than 5 days). so we can conclude that users dislike most to sleep with the device. other than that,</li>
+</ul>
+</li>
+</ul>
+<!---no graph or table or SQL file needed here-->  
+<ul>
+<li>
+<p>Q4: What is the most frequent time of day for usage?</p>
+<ul>
+<li>Most people wear their device most of the day, but in general, people who do take off their devices, take them off from 10:00am to 4:00pm, but they seem to put the device back on at 12:00, which is extremely strange and needs further investigating.</li>
+</ul>
+<!---no graph needed here-->  
+</li>
+<li>
+<p>Q5: How much running did they do this week? how long are their intervals?</p>
+<ul>
+<li>It is difficult to say whether the users ran or not. because very active for example should have users faster than 4.2km/h, but there are slower users. so are they running, or are they doing something else</li>
+<li>It can be attempted to guess how many users are running based on their speed and intensity. at a certain pace, as discussed in the above correlations.</li>
+</ul>
+</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th align="center">stat</th>
+<th align="center">very active minutes</th>
+<th align="center">moderately active minutes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">avg</td>
+<td align="center">35.1</td>
+<td align="center">22.7</td>
+</tr>
+<tr>
+<td align="center">25th</td>
+<td align="center">9.3</td>
+<td align="center">9</td>
+</tr>
+<tr>
+<td align="center">50th</td>
+<td align="center">27</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td align="center">75th</td>
+<td align="center">50.8</td>
+<td align="center">29</td>
+</tr>
+</tbody>
+</table><ul>
+<li>
+<p>neglecting light activity at speeds &lt;1.86km/h which is not running nor park strolling, It can be seen that the average activity time for very active runners is 35.1minutes/day, while for moderately active runners is 22.7minutes/day, with 50% of runners running &gt;16 minutes a day.</p>
+</li>
+<li>
+<p>Q6: Are those users’ health metrics within the healthy range?</p>
+<ul>
+<li>
+<p>The only indicator of health is the HRV in the SecondHRV table. There is a limitation of only 14 users have recorded their HRV, it is needed to encourage more users into measuring this statistic, which is arguably the most important. it seems that the users do not have any idea how important it is. It was found that the baseline night (7:00am to 10:00pm, where they typically go to sleep) and day time for people. They’re all within 58-95, and that day time &lt; night time. so the people are fairly healthy! especially that the 95th percentile is at 113 and 1st percentile at 48. are still within the healthy range of 40~200.</p>
+<p><img src="graphs/question3.png" alt="Day vs night average HRV for users"></p>
+</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th align="center">Metric</th>
+<th align="center">min</th>
+<th align="center">max</th>
+<th align="center">avg</th>
+<th align="center">1st</th>
+<th align="center">5th</th>
+<th align="center">10th</th>
+<th align="center">25th</th>
+<th align="center">50th</th>
+<th align="center">75th</th>
+<th align="center">90th</th>
+<th align="center">95th</th>
+<th align="center">99th</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Value</td>
+<td align="center">36</td>
+<td align="center">203</td>
+<td align="center">77</td>
+<td align="center">48</td>
+<td align="center">54</td>
+<td align="center">57</td>
+<td align="center">63</td>
+<td align="center">73</td>
+<td align="center">88</td>
+<td align="center">102</td>
+<td align="center">113</td>
+<td align="center">148</td>
+</tr>
+</tbody>
+</table></li>
+<li>
+<p>Q7: do weekends affect the performance and sleep?</p>
+<ul>
+<li>it can be seen that the least very active day is Sunday, a weekend day, is the lowest day of the week.</li>
+<li>For moderate activity, Friday is the least (which is just before the weekend!), while Tuesday is the highest.<br>
+<img src="graphs/question7-a.png" alt="Total active minutes for all users at days of week"></li>
+<li>For sleep, only consider users with &gt;2 records. the average sleep on days is highest on Saturday and Sunday, but lowest on Monday and Thursday.</li>
+<li>for activity in general, Sunday is the least, and Tuesday is the most.<br>
+<img src="graphs/question7-b.png" alt="Total sleep for all users ay days of week"><br>
+We can conlude that on weekends, especially Sunday, users tend to relax and do the least activity, and sleep the most.</li>
+</ul>
+</li>
+<li>
+<p>Q8: is their job sedentary or active?</p>
+<ul>
+<li>
+<p>To answer this, look at the avg MET for each user from 9:00 am to 5:00 pm for each day, vs outside that time (except from 10:00pm to 7:00am, where they are supposedly sleeping)</p>
+</li>
+<li>
+<p>some users have work met &gt; none work, and others have the opposite, others have the same, however the avg values (for MET &gt;2 records) are quite low. most users have a sedentary job.</p>
+<p><img src="graphs/question8.png" alt="Average Calories at work, vs outside work per user."></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Q9: do they wear the device while sleeping?</p>
+<ul>
+<li>10/33 users did not wear it.</li>
+<li>the ones who did wear it, I expected ~12500 records for 6.8h of sleep every night. only 10/24 have &gt;10000 records for the whole month. it could be due to lack of sleep, but is unlikely and needs further investigation.</li>
+</ul>
+</li>
+</ul>
+<!---no graph or table needed here-->  
+<ul>
+<li>
+<p>Q10: do they still wear it on the weekends?</p>
+<ul>
+<li>the least worn day was Monday, followed by Sunday, Saturday and Friday<br>
+<img src="graphs/question10-a.png" alt="Number of users per day of week."></li>
+<li>the day with the lowest average minutes worn is Thursday then Sunday then Saturday, and the most is Monday.<br>
+<img src="graphs/question10-b.png" alt="img.png"><br>
+–&gt; so less people wear the device on Monday and closely followed by the weekend. and when people actually put on the device on the weekends, they use it for the least time</li>
+</ul>
+</li>
+<li>
+<p>Q11 :when do they wake up and go to sleep?</p>
+<ul>
+<li>
+<p>they start waking up at 6:00 am and go to sleep at 9:30pm.<br>
+perhaps in the future the company can add a feature to know exactly where each user woke up. e.g. by allowing the user to set an alarm on the device, and record when the user turns off his device.</p>
+<p><img src="graphs/question11.png" alt="Number of sleeping minutes at different times of day"></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="act">5-Act</h1>
+<h4 id="now-that-the-analysis-is-complete-it-is-time-to-make-recommendations-that-will-drive-data-driven-decisions-for-bellabeats-marketting-strategy">Now that the analysis is complete, it is time to make recommendations that will drive data driven decisions for BellaBeat’s marketting strategy</h4>
+<ol>
+<li>
+<p>Investigate why users do not sleep with the device, or add some features that encourage sleeping with it. A quick google search shows that smart devices emit radiation, and is why users od not sleep with it. that could be the cause!</p>
+</li>
+<li>
+<p>Because we don’t know when users exactly fall asleep, Add a feature to the app or device e.g. similar to Netflix’s “are you still watching?”, or prompt them for their usual sleep schedules and concentrate on that time.</p>
+</li>
+<li>
+<p>Ask the users on the device or app to enter what the activity they are doing is, or what is their job or the nature of their job. if the users do not respond to these, a point system could be set up to entice them to input their information.</p>
+</li>
+<li>
+<p>Have the device push them to their goals on the weekend, or provide a fun alternative that they can enjoy while resting. provide them with a weekly summary so they can feel good about themselves. The company can also add features to the device that sends a message on a weekend e.g. “it’s the weekend! enjoy getting uninterrupted sleep” or something similar.</p>
+</li>
+<li>
+<p>Sedentary jobs are known to have adverse health effects because of sitting for too long or staring at the screen. it could be nice to add some features to remind the user to take a break or stare away from the screen or get up and stretch or etc.</p>
+</li>
+<li>
+<p>Add features or messages to encourage them to use the device on the weekend, i.e. to help them relax.</p>
+</li>
+<li>
+<p>Do not let the device approximate MET. it produces misleading data.</p>
+</li>
+<li>
+<p>Have HRV be the main focus of the device/app, and make that the main marketting feature. because HRV is truly the only metric that the device can use to predict whether a user is acutally healthy.</p>
+</li>
+</ol>
+<hr>
+<h1 id="appendix">Appendix</h1>
+<h3 id="here-you-will-find-all-of-the-postgresql-queries-that-were-written-to-answer-the-questions-or-retrieve-particular-data">Here you will find all of the PostgreSQL queries that were written to answer the questions or retrieve particular data</h3>
+<p>SQL syntax for removing whole duplicate records from any table “table_name”</p>
+<pre class=" language-undefined"><code class="prism language-{postgreSQL} language-undefined"> WITH everything AS 
+    DELETE FROM table_name
+    RETURNING * 
+ ) 
+ INSERT INTO table_name
+ SELECT DISTINCT * 
+ FROM everything;
+</code></pre>
+   <br>
+  SQL syntax for checking for any cells in any table "table_name" that have NULL values
+<pre class=" language-undefined"><code class="prism language-{postgresql} language-undefined"> SELECT *
+ FROM table_name
+ WHERE
+	 NOT (table_name IS NOT NULL);
+</code></pre>
+   <br>
+  SQL Syntax for summarizing a numerical column "col_name" in a table "table_name": 
+<pre class=" language-undefined"><code class="prism language-{postgresql} language-undefined">SELECT
+    MIN(col_name),
+    MAX(col_name),
+    AVG(col_name),
+    COUNT(*),
+    PERCENTILE_DISC(0.01) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.05) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.1) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.25) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.75) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.9) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.95) WITHIN GROUP (ORDER BY col_name),
+    PERCENTILE_DISC(0.99) WITHIN GROUP (ORDER BY col_name)
+    FROM table_name
+    WHERE
+  	  col_name IS NOT NULL 
+</code></pre>
+<br>
+SQL Syntax for summarizing a date/time column:
+<pre><code>SELECT
+	 MIN(col_name),
+	 MAX(col_name),
+	 COUNT(*)
+FROM table_name
+WHERE
+	 col_name IS NOT NULL;
+</code></pre>
+<br>
+SQL Syntax for summarizing a categorical column:  
+<pre><code>SELECT
+	col_name,
+	COUNT(*)
+FROM table_name
+GROUP BY
+    col_name
+</code></pre>
+<br>
+ Question 1:  
+<pre><code>--Question 1 
+ SELECT
+     CAST(AVG(very_active_minutes) AS INT) AS "very",  
+     CAST(AVG(moderately_active_minutes) AS INT) AS "moderate", 
+     CAST(AVG(lightly_active_minutes) AS INT) AS "light",        CAST(AVG(sedentary_active_minutes) AS INT) AS "inactive"  
+ FROM DailyActivity;
+</code></pre>
+<br>
+<p>Question 2 and 4, count of number of records per user:</p>
+<pre><code>WITH Minute AS (
+     SELECT *
+     FROM MinuteCalories
+     INNER JOIN MinuteMET USING(device_id, date, time)
+     INNER JOIN MinuteIntensity USING(device_id, date, time)
+     INNER JOIN MinuteSteps USING(device_id, date, time)
+     LEFT JOIN MinuteSleep USING(device_id, date, time)
+)
+SELECT
+	device_id,
+	COUNT(*)
+FROM Minute
+GROUP BY
+	device_id 
+</code></pre>
+<p>Question 2 and 4, count of number of records by day</p>
+<pre><code>WITH Minute AS (
+    SELECT *
+    FROM MinuteCalories
+    INNER JOIN MinuteMET USING(device_id, date, time)
+    INNER JOIN MinuteIntensity USING(device_id, date, time)
+    INNER JOIN MinuteSteps USING(device_id, date, time)
+    LEFT JOIN MinuteSleep USING(device_id, date, time)
+)
+SELECT
+	date,
+	COUNT(*)
+FROM Minute
+GROUP BY
+	date
+ORDER BY
+	date ASC; 
+</code></pre>
+<br>
+Question 5:  
+<pre><code>/*This is a file that fetches records for users with both active minutes &gt; 0, and active distance &gt; 0 for all days of the study, and calculates their speed. it should be filtered so that it only produces runners. for moderately active speed is (1.86-4.2)km/h, for very active it is &gt; 4.2km/h*/
+SELECT
+    lightly_active_distance,
+    lightly_active_minutes,
+    CAST((lightly_active_distance*60/lightly_active_minutes) AS NUMERIC(3,1)) AS "lightly_active_speed"
+FROM DailyActivity
+WHERE
+	lightly_active_distance &gt; 0
+	AND lightly_active_minutes &gt; 0
+ORDER BY
+	1 ASC; 
+</code></pre>
+<br>
+Question 6:  
+<pre><code>WITH day_avg AS (
+    SELECT 
+	    device_id,
+	    CAST(AVG(HRV) AS INT) AS "day_avg_hrv"
+	FROM SecondHRV
+	WHERE
+		time BETWEEN '07:00:00' AND '22:00:00'
+	GROUP BY
+		device_id
+), night_avg AS (
+	SELECT
+		device_id, 
+		CAST(AVG(HRV) AS INT) AS "night_avg_hrv"
+	 FROM SecondHRV
+	 WHERE
+		 time &gt; '22:00:00' OR time &lt; '07:00:00'        
+	GROUP BY  
+	     device_id 
+) 
+SELECT
+	d.device_id,
+	day_avg_hrv,
+	night_avg_hrv
+FROM day_avg AS "d" 
+FULL OUTER JOIN night_avg AS "n" USING(device_id) 
+</code></pre>
+ <br>
+ Questions 7&amp;10 (the weekend), Helping function:  
+<pre><code>/*The function EXTRACT(DOW FROM date) returns the days of the week as a double precision numerical type such that Sunday = 0, and Saturday = 6. I have created the following function to take that number, and return the name of the day of the week for me, so that my life becomes easier.*/
+CREATE OR REPLACE FUNCTION fn_downumber2name(dow double precision) RETURNS TEXT AS
+$$
+    SELECT (
+	         CASE
+	         WHEN dow = 0 THEN 'Sun'
+	         WHEN dow = 1 THEN 'Mon'
+	         WHEN dow = 2 THEN 'Tue'
+	         WHEN dow = 3 THEN 'Wed'
+	         WHEN dow = 4 THEN 'Thu'
+	         WHEN dow = 5 THEN 'Fri'
+	         ELSE 'Sat'
+	         END
+	        )
+ $$ LANGUAGE SQL
+</code></pre>
+<br>
+Questions 7&amp;10:  
+<pre><code> /*This SQL code will group by days of the week using the above function.*/
+ SELECT
+     fn_downumber2Name(EXTRACT(dOW FROM date)) AS "day_of_week",
+     COUNT(*) 
+ FROM DailyACtivity
+ GROUP BY
+	 fn_downumber2name(EXTRACT(dOW FROM date))
+</code></pre>
+<br>
+Question 8:  
+<pre><code> /*This file will compare the MET at work hours against the avg MET outside work hours (9:00 am to 5:00pm)*/
+  WITH Minute AS (
+	  SELECT *
+	  FROM MinuteCalories
+	  INNER JOIN MinuteMET USING(device_id, date, time)
+	  INNER JOIN MinuteIntensity USING(device_id, date, time)
+	  INNER JOIN MinuteSteps USING(device_id, date, time)
+	  LEFT JOIN MinuteSleep USING(device_id, date, time)
+ )
+ SELECT
+	 time,
+	 CAST(AVG(MET) AS NUMERIC(3,1)) AS "work_met"
+ FROM Minute
+ WHERE
+	 time BETWEEN '09:00:00' AND '17:00:00'
+ GROUP BY
+	 time
+ ORDER BY
+	 1 ASC; 
+</code></pre>
+<br>
+Question 11:  
+<pre><code> /*This file will give me a count of sleep records by time of day for all users in all days*/
+ SELECT
+     time,
+     COUNT(*)
+ FROM
+	 MinuteSleep
+ WHERE
+	 EXTRACT(SECOND FROM time) = 0
+ GROUP BY
+	 time
+ ORDER BY
+	 time ASC;
+</code></pre>
+</div>
+</body>
+
+</html>
